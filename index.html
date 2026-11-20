@@ -56,6 +56,135 @@
         inset 0 1px 0 rgba(255, 255, 255, 1);
     }
 
+    /* Apple Liquid Glass Segmented Navigation Track & Sliding Lens Pill */
+    .apple-glass-nav-track {
+      position: relative;
+      padding: 4px;
+      border-radius: 9999px;
+      background: linear-gradient(
+        180deg,
+        rgba(20, 19, 18, 0.048) 0%,
+        rgba(20, 19, 18, 0.028) 100%
+      );
+      border: 1px solid rgba(255, 255, 255, 0.62);
+      box-shadow:
+        inset 0 1.5px 3px rgba(20, 19, 18, 0.065),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.8),
+        0 1px 2px rgba(255, 255, 255, 0.55);
+    }
+
+    .apple-glass-pill {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 0;
+      width: 0;
+      border-radius: 9999px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.96) 0%,
+        rgba(255, 255, 255, 0.72) 52%,
+        rgba(255, 255, 255, 0.88) 100%
+      );
+      backdrop-filter: blur(18px) saturate(220%);
+      -webkit-backdrop-filter: blur(18px) saturate(220%);
+      border: 1px solid rgba(255, 255, 255, 0.96);
+      box-shadow:
+        0 6px 18px -4px rgba(20, 19, 18, 0.14),
+        0 1.5px 4px rgba(20, 19, 18, 0.06),
+        inset 0 1.5px 1px rgba(255, 255, 255, 1),
+        inset 0 -1.5px 3px rgba(20, 19, 18, 0.05),
+        inset 0 0 14px rgba(255, 255, 255, 0.65);
+      transform: translate3d(0, 0, 0) scale(1);
+      will-change: transform, width;
+      transition:
+        transform 0.52s cubic-bezier(0.22, 1.16, 0.36, 1),
+        width 0.52s cubic-bezier(0.22, 1.16, 0.36, 1),
+        box-shadow 0.36s ease,
+        opacity 0.24s ease;
+    }
+
+    .apple-glass-pill::before {
+      content: "";
+      position: absolute;
+      inset: 1px 6px auto 6px;
+      height: 46%;
+      border-radius: 9999px;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.92) 0%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      pointer-events: none;
+    }
+
+    .apple-glass-pill::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: 9999px;
+      background: linear-gradient(
+        115deg,
+        rgba(255, 255, 255, 0.7) 0%,
+        rgba(255, 145, 77, 0.14) 36%,
+        rgba(255, 255, 255, 0.1) 64%,
+        rgba(255, 255, 255, 0.65) 100%
+      );
+      opacity: 0.45;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .apple-glass-pill.is-gliding {
+      box-shadow:
+        0 10px 24px -5px rgba(20, 19, 18, 0.18),
+        0 2px 8px rgba(255, 107, 26, 0.1),
+        inset 0 2px 1.5px rgba(255, 255, 255, 1),
+        inset 0 -2px 4px rgba(20, 19, 18, 0.06),
+        inset 0 0 18px rgba(255, 255, 255, 0.85);
+    }
+
+    .apple-glass-pill.is-gliding::after {
+      opacity: 0.95;
+    }
+
+    .apple-glass-pill.no-transition {
+      transition: none !important;
+    }
+
+    .apple-glass-nav-item {
+      position: relative;
+      z-index: 2;
+      transition:
+        color 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.25s ease,
+        transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .apple-glass-nav-item:active {
+      transform: scale(0.965);
+    }
+
+    .apple-glass-nav-item[data-active="true"] {
+      color: #141312;
+      font-weight: 700;
+    }
+
+    .apple-glass-nav-item[data-active="false"]:hover {
+      color: #141312;
+      background-color: rgba(255, 255, 255, 0.36);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .apple-glass-pill,
+      .apple-glass-nav-item {
+        transition-duration: 0.01ms !important;
+      }
+    }
+
     /* Modern architectural hero backdrop */
     .hero-modern-bg {
       background-color: #fbf8f4;
@@ -364,7 +493,7 @@
       <div class="mx-auto max-w-6xl">
         <nav class="liquid-glass-bar rounded-full px-3.5 sm:px-5 py-2.5 flex items-center justify-between gap-3">
           <!-- Brand Logo (% orange icon + black 'Promo' + orange 'Mu') -->
-          <a href="#beranda" class="flex items-center gap-2.5 shrink-0 pl-1">
+          <a href="#beranda" onclick="setActiveGlassNav('beranda')" class="flex items-center gap-2.5 shrink-0 pl-1">
             <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-[#FF6B1A] text-white text-xs font-extrabold shadow-sm">
               %
             </span>
@@ -373,23 +502,39 @@
             </span>
           </a>
 
-          <!-- Desktop Center Navigation Links -->
-          <div class="hidden md:flex items-center gap-1 lg:gap-1.5">
-            <a href="#beranda" class="rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-bold text-[#141312] shadow-xs transition">
+          <!-- Desktop Center Navigation Links (Apple Liquid Glass Sliding Pill) -->
+          <div id="desktopGlassNav" class="hidden md:flex items-center gap-1 lg:gap-1.5 apple-glass-nav-track">
+            <span id="desktopGlassNavIndicator" class="apple-glass-pill no-transition" aria-hidden="true"></span>
+
+            <a
+              href="#beranda"
+              data-glass-nav="beranda"
+              data-active="true"
+              onclick="handleGlassNavAnchor('beranda')"
+              class="apple-glass-nav-item rounded-full px-3.5 py-1.5 text-xs font-bold text-[#141312]"
+            >
               Beranda
             </a>
 
-            <a href="#katalog-promo" class="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-muted hover:text-[#141312] hover:bg-black/5 transition">
+            <a
+              href="#katalog-promo"
+              data-glass-nav="promo"
+              data-active="false"
+              onclick="handleGlassNavAnchor('promo')"
+              class="apple-glass-nav-item flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-muted"
+            >
               <span class="text-[#FF6B1A]">🔥</span>
               <span>Promo Hari Ini</span>
             </a>
 
             <!-- Kategori & Mega Menu Trigger -->
-            <div id="megaMenuTriggerWrap" class="relative">
+            <div id="megaMenuTriggerWrap" class="relative z-[2]">
               <button
                 type="button"
+                data-glass-nav="kategori"
+                data-active="false"
                 onclick="toggleMegaMenu()"
-                class="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-muted hover:text-[#141312] hover:bg-black/5 transition"
+                class="apple-glass-nav-item flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-muted"
               >
                 <span>Kategori &amp; Mega Menu</span>
                 <svg id="megaChevron" class="h-3.5 w-3.5 text-ink-muted transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
@@ -399,15 +544,17 @@
             </div>
 
             <!-- City / Wilayah Selector -->
-            <div id="cityTriggerWrap" class="relative">
+            <div id="cityTriggerWrap" class="relative z-[2]">
               <button
                 type="button"
+                data-glass-nav="wilayah"
+                data-active="false"
                 onclick="toggleCityMenu()"
-                class="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-muted hover:text-[#141312] hover:bg-black/5 transition"
+                class="apple-glass-nav-item flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-muted"
               >
                 <span class="h-1.5 w-1.5 rounded-full bg-[#FF6B1A]"></span>
                 <span id="headerCityLabel">Wilayah</span>
-                <svg class="h-3.5 w-3.5 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <svg id="cityChevron" class="h-3.5 w-3.5 text-ink-muted transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
@@ -2477,6 +2624,7 @@
       initGlobalDismissListeners();
       initHeroCursorGlow();
       initRegionalClock();
+      initAppleGlassNav();
 
       if (state.pendingDashboardTab && !state.user) {
         openAuthModal("signin");
@@ -2550,31 +2698,130 @@
     }
 
     // ========================================================================
-    // 1. NAVIGATION DROPDOWNS & CATALOG FILTERING
+    // 1. NAVIGATION DROPDOWNS, APPLE LIQUID GLASS SLIDING PILL & CATALOG FILTERING
     // ========================================================================
-    function toggleMegaMenu(force) {
+    let activeGlassNavKey = "beranda";
+    let lastBaseGlassNavKey = "beranda";
+    let glassNavGlideTimer = null;
+
+    function positionGlassNavIndicator(targetKey, animate = true) {
+      const track = document.getElementById("desktopGlassNav");
+      const pill = document.getElementById("desktopGlassNavIndicator");
+      if (!track || !pill) return;
+
+      const items = track.querySelectorAll("[data-glass-nav]");
+      let activeItem = null;
+      items.forEach((item) => {
+        const isMatch = item.getAttribute("data-glass-nav") === targetKey;
+        item.setAttribute("data-active", isMatch ? "true" : "false");
+        item.classList.toggle("text-[#141312]", isMatch);
+        item.classList.toggle("font-bold", isMatch);
+        item.classList.toggle("text-ink-muted", !isMatch);
+        item.classList.toggle("font-semibold", !isMatch);
+        if (isMatch) activeItem = item;
+      });
+
+      if (!activeItem) return;
+      const trackRect = track.getBoundingClientRect();
+      const itemRect = activeItem.getBoundingClientRect();
+      if (trackRect.width === 0 || itemRect.width === 0) return;
+
+      const offsetX = itemRect.left - trackRect.left - track.clientLeft;
+      const pillWidth = itemRect.width;
+
+      if (!animate) {
+        pill.classList.add("no-transition");
+      } else {
+        pill.classList.remove("no-transition");
+        pill.classList.add("is-gliding");
+        if (glassNavGlideTimer) window.clearTimeout(glassNavGlideTimer);
+        glassNavGlideTimer = window.setTimeout(() => {
+          pill.classList.remove("is-gliding");
+        }, 460);
+      }
+
+      pill.style.width = `${pillWidth.toFixed(2)}px`;
+      pill.style.transform = `translate3d(${offsetX.toFixed(2)}px, 0, 0) scale(${animate ? "1.02, 1.05" : "1, 1"})`;
+      pill.style.opacity = "1";
+
+      if (animate) {
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            pill.style.transform = `translate3d(${offsetX.toFixed(2)}px, 0, 0) scale(1, 1)`;
+          });
+        });
+      } else {
+        window.requestAnimationFrame(() => {
+          pill.classList.remove("no-transition");
+        });
+      }
+    }
+
+    function setActiveGlassNav(key, animate = true) {
+      activeGlassNavKey = key;
+      if (key === "beranda" || key === "promo") {
+        lastBaseGlassNavKey = key;
+      }
+      positionGlassNavIndicator(key, animate);
+    }
+
+    function handleGlassNavAnchor(key) {
+      toggleMegaMenu(false, true);
+      toggleCityMenu(false, true);
+      setActiveGlassNav(key, true);
+    }
+
+    function initAppleGlassNav() {
+      positionGlassNavIndicator(activeGlassNavKey, false);
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          positionGlassNavIndicator(activeGlassNavKey, false);
+        });
+      }
+
+      window.addEventListener("resize", () => {
+        positionGlassNavIndicator(activeGlassNavKey, false);
+      });
+    }
+
+    function toggleMegaMenu(force, skipNavRestore = false) {
       const panel = document.getElementById("megaMenuDropdown");
       const chevron = document.getElementById("megaChevron");
       const cityPanel = document.getElementById("cityDropdownMenu");
+      const cityChevron = document.getElementById("cityChevron");
       if (!panel) return;
 
       const shouldOpen = typeof force === "boolean" ? force : panel.classList.contains("hidden");
       panel.classList.toggle("hidden", !shouldOpen);
       if (chevron) chevron.classList.toggle("rotate-180", shouldOpen);
-      if (shouldOpen && cityPanel) cityPanel.classList.add("hidden");
+      if (shouldOpen) {
+        if (cityPanel) cityPanel.classList.add("hidden");
+        if (cityChevron) cityChevron.classList.remove("rotate-180");
+        setActiveGlassNav("kategori", true);
+      } else if (!skipNavRestore && activeGlassNavKey === "kategori") {
+        setActiveGlassNav(lastBaseGlassNavKey, true);
+      }
     }
 
-    function toggleCityMenu(force) {
+    function toggleCityMenu(force, skipNavRestore = false) {
       const cityPanel = document.getElementById("cityDropdownMenu");
+      const cityChevron = document.getElementById("cityChevron");
       const megaPanel = document.getElementById("megaMenuDropdown");
       const chevron = document.getElementById("megaChevron");
       if (!cityPanel) return;
 
       const shouldOpen = typeof force === "boolean" ? force : cityPanel.classList.contains("hidden");
       cityPanel.classList.toggle("hidden", !shouldOpen);
-      if (shouldOpen && megaPanel) {
-        megaPanel.classList.add("hidden");
-        if (chevron) chevron.classList.remove("rotate-180");
+      if (cityChevron) cityChevron.classList.toggle("rotate-180", shouldOpen);
+      if (shouldOpen) {
+        if (megaPanel) {
+          megaPanel.classList.add("hidden");
+          if (chevron) chevron.classList.remove("rotate-180");
+        }
+        setActiveGlassNav("wilayah", true);
+      } else if (!skipNavRestore && activeGlassNavKey === "wilayah") {
+        setActiveGlassNav(lastBaseGlassNavKey, true);
       }
     }
 
@@ -2890,6 +3137,7 @@
       if (label) label.textContent = city === "Semua Wilayah" ? "Wilayah" : city;
       if (dropdown) dropdown.value = city;
       if (worldClockSelect) worldClockSelect.value = "";
+      positionGlassNavIndicator(activeGlassNavKey, true);
       renderCityMenus();
       renderPromoCards();
       updateRegionalClockDisplay();
@@ -2964,6 +3212,7 @@
       state.activeFilter = filterName;
       state.maxBudget = null;
       state.activeCollection = null;
+      if (scroll) lastBaseGlassNavKey = "promo";
       toggleMegaMenu(false);
       updateActiveFilterNotice();
       renderCategoryFilterBar();
@@ -2975,6 +3224,7 @@
       state.activeCollection = collectionName;
       state.activeFilter = "Semua Menu";
       state.maxBudget = null;
+      lastBaseGlassNavKey = "promo";
       toggleMegaMenu(false);
       updateActiveFilterNotice();
       renderCategoryFilterBar();
@@ -2987,6 +3237,7 @@
       state.maxBudget = maxRp;
       state.activeFilter = "Semua Menu";
       state.activeCollection = null;
+      lastBaseGlassNavKey = "promo";
       toggleMegaMenu(false);
       updateActiveFilterNotice();
       renderCategoryFilterBar();
@@ -3022,6 +3273,7 @@
       if (cityDrop) cityDrop.value = "Semua Wilayah";
       const cityLabel = document.getElementById("headerCityLabel");
       if (cityLabel) cityLabel.textContent = "Wilayah";
+      positionGlassNavIndicator(activeGlassNavKey, true);
 
       renderCityMenus();
       updateActiveFilterNotice();
