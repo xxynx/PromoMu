@@ -7,14 +7,15 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const app = express();
+
+app.get('/api/health', (_req: Request, res: Response) => {
+  res.json({ ok: true });
+});
+
 async function startServer() {
-  const app = express();
   const port = Number(process.env.PORT) || 3000;
   const isProd = process.env.NODE_ENV === 'production';
-
-  app.get('/api/health', (_req: Request, res: Response) => {
-    res.json({ ok: true });
-  });
 
   if (!isProd) {
     const { createServer: createViteServer } = await import('vite');
@@ -74,7 +75,11 @@ async function startServer() {
   });
 }
 
-startServer().catch((err) => {
-  console.error('Failed to start server:', err);
-  process.exit(1);
-});
+if (!process.env.VERCEL) {
+  startServer().catch((err) => {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  });
+}
+
+export default app;
