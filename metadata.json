@@ -1,0 +1,6 @@
+{
+  "name": "PromoMu",
+  "description": "Platform promo dan diskon kuliner hemat anak muda dengan dashboard akun pengguna.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

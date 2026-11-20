@@ -1,0 +1,2504 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PromoMu — Makan Enak, Dompet Tetap Tenang</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Inter"', 'sans-serif'],
+            body: ['"Inter"', 'sans-serif'],
+          },
+          colors: {
+            canvas: '#FAF6F2',
+            surface: '#FFFFFF',
+            subtle: '#F3EFEA',
+            ink: {
+              DEFAULT: '#0A0A0A',
+              muted: '#666460',
+              light: '#9A9690',
+            },
+            accent: {
+              50: '#FFF4ED',
+              100: '#FFE6D5',
+              200: '#FECCAA',
+              500: '#F97316',
+              600: '#EA580C',
+            }
+          },
+          boxShadow: {
+            'card': '0 2px 16px -2px rgba(20, 20, 20, 0.04)',
+            'card-hover': '0 14px 30px -8px rgba(20, 20, 20, 0.09)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       1. BASE MINIMALIST FOUNDATION
+       ========================================================================== */
+    body {
+      background-color: #FAF6F2;
+      color: #0A0A0A;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .hairline-border {
+      border: 1px solid rgba(20, 20, 20, 0.08);
+    }
+
+    /* ==========================================================================
+       2. IPHONE LIQUID GLASS FLOATING HEADER
+       ========================================================================== */
+    .liquid-glass-bar {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow:
+        0 10px 30px -6px rgba(20, 20, 20, 0.08),
+        0 1px 4px rgba(20, 20, 20, 0.03),
+        inset 0 1.5px 0.5px rgba(255, 255, 255, 0.96),
+        inset 0 -1px 1px rgba(20, 20, 20, 0.04);
+    }
+
+    .liquid-glass-panel {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      box-shadow:
+        0 24px 48px -12px rgba(20, 20, 20, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+    }
+
+    /* Warm subtle hero backdrop inspired by BuruHemat & HematEats */
+    .hero-warm-glow {
+      background:
+        radial-gradient(circle at 82% 24%, rgba(249, 115, 22, 0.14) 0%, rgba(254, 204, 170, 0.08) 34%, transparent 65%),
+        radial-gradient(circle at 14% 18%, rgba(255, 230, 213, 0.55) 0%, transparent 52%);
+    }
+
+    /* ==========================================================================
+       3. ANIMATION 1: STICKY SCROLL BLURRED C-RING & KINETIC BLUR-REVEAL QUOTE
+       ========================================================================== */
+    .kinetic-scroll-wrapper {
+      height: 145vh;
+      position: relative;
+    }
+
+    .kinetic-sticky-stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .kinetic-c-ring {
+      filter: blur(10px);
+      will-change: transform, opacity;
+      transform-origin: center center;
+    }
+
+    .kinetic-line {
+      will-change: filter, opacity, transform;
+      transition: color 0.2s ease;
+    }
+
+    /* ==========================================================================
+       4. ANIMATION 2: 3-CARD PROGRESS BARS & 3-TAB SLIDING INDICATOR
+       ========================================================================== */
+    .progress-fill {
+      width: 0%;
+      transition: width 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tab-glider {
+      width: 33.333333%;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    @keyframes viewCrossFade {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .showcase-fade {
+      animation: viewCrossFade 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* ==========================================================================
+       5. ANIMATION 3: GIANT BOTTOM 'PromoMu®' WORDMARK (CONTINUOUS SCROLL PHYSICS + HOVER)
+       ========================================================================== */
+    .giant-wordmark {
+      font-size: clamp(4.5rem, 15.5vw, 13.5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.94;
+      user-select: none;
+      will-change: transform, opacity;
+      transform-origin: center bottom;
+      transform: translate3d(0, 68px, 0) scale(0.96);
+      opacity: 0;
+    }
+
+    .wordmark-hover-char {
+      display: inline-block;
+      cursor: pointer;
+      will-change: transform;
+      transform: translate3d(0, 0, 0) scale(1);
+      transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .wordmark-hover-char:hover {
+      transform: translate3d(0, -14px, 0) scale(1.03);
+    }
+
+    /* Clean FAQ Accordion */
+    .faq-chevron {
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .faq-item[data-open="true"] .faq-chevron {
+      transform: rotate(180deg);
+    }
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .faq-item[data-open="true"] .faq-answer {
+      grid-template-rows: 1fr;
+    }
+    .faq-answer-inner {
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="selection:bg-accent-500 selection:text-white">
+
+  <!-- ========================================================================
+       FOREGROUND PAGE CONTENT
+       ======================================================================== -->
+  <div id="mainPageContent" class="relative z-[10] bg-canvas">
+
+    <!-- ======================================================================
+         HEADER: FLOATING IPHONE LIQUID GLASS NAVIGATION BAR
+         ====================================================================== -->
+    <header class="fixed top-4 inset-x-0 z-40 px-4 sm:px-6">
+      <div class="mx-auto max-w-6xl">
+        <nav class="liquid-glass-bar rounded-full px-3.5 sm:px-5 py-2.5 flex items-center justify-between gap-3">
+          <!-- Brand Logo (% orange icon + black 'Promo' + orange 'Mu') -->
+          <a href="#beranda" class="flex items-center gap-2.5 shrink-0 pl-1">
+            <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-[#FF6B1A] text-white text-xs font-extrabold shadow-sm">
+              %
+            </span>
+            <span class="text-base sm:text-lg font-extrabold tracking-tight text-[#141312]">
+              Promo<span class="text-[#FF6B1A]">Mu</span>
+            </span>
+          </a>
+
+          <!-- Desktop Center Navigation Links -->
+          <div class="hidden md:flex items-center gap-1 lg:gap-1.5">
+            <a href="#beranda" class="rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-bold text-[#141312] shadow-xs transition">
+              Beranda
+            </a>
+
+            <a href="#katalog-promo" class="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-muted hover:text-[#141312] hover:bg-black/5 transition">
+              <span class="text-[#FF6B1A]">🔥</span>
+              <span>Promo Hari Ini</span>
+            </a>
+
+            <!-- Kategori & Mega Menu Trigger -->
+            <div id="megaMenuTriggerWrap" class="relative">
+              <button
+                type="button"
+                onclick="toggleMegaMenu()"
+                class="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-muted hover:text-[#141312] hover:bg-black/5 transition"
+              >
+                <span>Kategori &amp; Mega Menu</span>
+                <svg id="megaChevron" class="h-3.5 w-3.5 text-ink-muted transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- City / Wilayah Selector -->
+            <div id="cityTriggerWrap" class="relative">
+              <button
+                type="button"
+                onclick="toggleCityMenu()"
+                class="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-muted hover:text-[#141312] hover:bg-black/5 transition"
+              >
+                <span class="h-1.5 w-1.5 rounded-full bg-[#FF6B1A]"></span>
+                <span id="headerCityLabel">Wilayah</span>
+                <svg class="h-3.5 w-3.5 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <!-- City Dropdown Panel -->
+              <div id="cityDropdownMenu" class="hidden absolute left-0 mt-3 w-48 rounded-2xl liquid-glass-panel p-2 z-50">
+                <p class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-ink-light">Pilih Wilayah</p>
+                <div id="headerCityList" class="space-y-0.5"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Auth Buttons (Sign In / Sign Up) or Logged-in User Pill -->
+          <div class="flex items-center gap-2">
+            <div id="authGuestActions" class="flex items-center gap-1.5 sm:gap-2">
+              <button
+                type="button"
+                onclick="openAuthModal('signin')"
+                class="rounded-full px-3.5 py-1.5 text-xs font-bold text-[#141312] hover:bg-black/5 transition"
+              >
+                Sign In
+              </button>
+              <button
+                type="button"
+                onclick="openAuthModal('signup')"
+                class="rounded-full bg-[#181716] px-4 py-2 text-xs font-bold text-white hover:bg-[#FF6B1A] transition shadow-sm"
+              >
+                Sign Up
+              </button>
+            </div>
+
+            <!-- Logged-in Pill -->
+            <div id="authUserPill" class="hidden items-center gap-2 rounded-full bg-white/90 pl-2 pr-3 py-1 hairline-border">
+              <span id="userAvatarInitial" class="flex h-6 w-6 items-center justify-center rounded-full bg-[#FF6B1A] text-[11px] font-extrabold text-white">
+                M
+              </span>
+              <span id="userAvatarName" class="text-xs font-bold text-[#141312] max-w-[90px] truncate">Mahasiswa</span>
+              <button type="button" onclick="openLatestVoucher()" class="rounded-full bg-accent-50 px-2 py-0.5 text-[10px] font-extrabold text-[#FF6B1A]">
+                <span id="userVoucherCount">0</span> Voucher
+              </button>
+              <button type="button" onclick="signOutUser()" class="text-[11px] font-semibold text-ink-light hover:text-[#141312] ml-1" title="Keluar">
+                ✕
+              </button>
+            </div>
+
+            <!-- Mobile Drawer Button -->
+            <button
+              type="button"
+              onclick="toggleMobileMenu()"
+              class="md:hidden flex h-9 w-9 items-center justify-center rounded-full bg-black/5 text-[#141312]"
+              aria-label="Menu"
+            >
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+              </svg>
+            </button>
+          </div>
+        </nav>
+
+        <!-- Desktop Mega Menu Panel (Liquid Glass) -->
+        <div id="megaMenuDropdown" class="hidden mt-3 rounded-3xl liquid-glass-panel p-6">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Kolom 1: Kategori Utama (8 Pilihan) -->
+            <div class="lg:col-span-5">
+              <div class="flex items-center justify-between mb-3">
+                <p class="text-[11px] font-bold uppercase tracking-wider text-ink-light">Kategori Utama</p>
+                <span class="text-[10px] font-bold text-[#FF6B1A]">8 Kategori</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                <button type="button" onclick="selectCategory('Kopi & Minuman', true)" class="flex items-center justify-between rounded-2xl p-2.5 text-left hover:bg-subtle transition">
+                  <div>
+                    <p class="text-xs font-bold text-ink">☕ Kopi &amp; Minuman</p>
+                    <p class="text-[10px] text-ink-muted">Kopi susu, boba, matcha</p>
+                  </div>
+                  <span class="text-xs font-bold text-accent-600">→</span>
+                </button>
+                <button type="button" onclick="selectCategory('Makanan Berat', true)" class="flex items-center justify-between rounded-2xl p-2.5 text-left hover:bg-subtle transition">
+                  <div>
+                    <p class="text-xs font-bold text-ink">🍛 Makanan Berat</p>
+                    <p class="text-[10px] text-ink-muted">Ayam geprek, rice bowl, katsu</p>
+                  </div>
+                  <span class="text-xs font-bold text-accent-600">→</span>
+                </button>
+                <button type="button" onclick="selectCategory('Camilan & Dessert', true)" class="flex items-center justify-between rounded-2xl p-2.5 text-left hover:bg-subtle transition">
+                  <div>
+                    <p class="text-xs font-bold text-ink">🥐 Camilan &amp; Dessert</p>
+                    <p class="text-[10px] text-ink-muted">Croffle, coffee bun, mochi</p>
+                  </div>
+                  <span class="text-xs font-bold text-accent-600">→</span>
+                </button>
+                <button type="button" onclick="selectCategory('Mie & Ramen', true)" class="flex items-center justify-between rounded-2xl p-2.5 text-left hover:bg-subtle transition">
+                  <div>
+                    <p class="text-xs font-bold text-ink">🍜 Mie &amp; Ramen</p>
+                    <p class="text-[10px] text-ink-muted">Mie pedas, ramen, bakmi</p>
+                  </div>
+                  <span class="text-xs font-bold text-accent-600">→</span>
+                </button>
+                <button type="button" onclick="selectCategory('Paket Tanggal Tua <20rb', true)" class="flex items-center justify-between rounded-2xl p-2.5 text-left hover:bg-subtle transition">
+                  <div>
+                    <p class="text-xs font-bold text-ink">💸 Paket Tanggal Tua &lt;20rb</p>
+                    <p class="text-[10px] text-ink-muted">Menu kenyang ramah kantong</p>
+                  </div>
+                  <span class="text-xs font-bold text-accent-600">→</span>
+                </button>
+                <button type="button" onclick="selectCategory('Buy 1 Get 1', true)" class="flex items-center justify-between rounded-2xl p-2.5 text-left hover:bg-subtle transition">
+                  <div>
+                    <p class="text-xs font-bold text-ink">👯 Buy 1 Get 1</p>
+                    <p class="text-[10px] text-ink-muted">Patungan berdua makin hemat</p>
+                  </div>
+                  <span class="text-xs font-bold text-accent-600">→</span>
+                </button>
+                <button type="button" onclick="selectCategory('Nongkrong Malam', true)" class="flex items-center justify-between rounded-2xl p-2.5 text-left hover:bg-subtle transition">
+                  <div>
+                    <p class="text-xs font-bold text-ink">🌙 Nongkrong Malam</p>
+                    <p class="text-[10px] text-ink-muted">Jajan malam &amp; angkringan modern</p>
+                  </div>
+                  <span class="text-xs font-bold text-accent-600">→</span>
+                </button>
+                <button type="button" onclick="selectCollection('All You Can Eat Hemat')" class="flex items-center justify-between rounded-2xl p-2.5 text-left hover:bg-subtle transition">
+                  <div>
+                    <p class="text-xs font-bold text-ink">🔥 All You Can Eat Hemat</p>
+                    <p class="text-[10px] text-ink-muted">Grill &amp; suki spesial mahasiswa</p>
+                  </div>
+                  <span class="text-xs font-bold text-accent-600">→</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Kolom 2: Koleksi Spesial Anak Muda (6 Koleksi) -->
+            <div class="lg:col-span-4">
+              <p class="text-[11px] font-bold uppercase tracking-wider text-ink-light mb-3">Koleksi Spesial Anak Muda</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5">
+                <button type="button" onclick="selectCollection('Sarapan & Ngopi Pagi')" class="w-full flex items-center justify-between rounded-2xl bg-canvas/80 px-3 py-2 text-left hairline-border hover:border-[#FF6B1A] transition">
+                  <span class="text-xs font-bold text-ink">☀️ Sarapan &amp; Ngopi Pagi</span>
+                  <span class="rounded-full bg-accent-50 px-2 py-0.5 text-[10px] font-bold text-accent-600">Mulai 8rb</span>
+                </button>
+                <button type="button" onclick="selectCollection('Makan Siang Mahasiswa')" class="w-full flex items-center justify-between rounded-2xl bg-canvas/80 px-3 py-2 text-left hairline-border hover:border-[#FF6B1A] transition">
+                  <span class="text-xs font-bold text-ink">🎓 Makan Siang Mahasiswa</span>
+                  <span class="rounded-full bg-accent-50 px-2 py-0.5 text-[10px] font-bold text-accent-600">Kenyang</span>
+                </button>
+                <button type="button" onclick="selectCollection('Teman Nugas & WiFi Kencang')" class="w-full flex items-center justify-between rounded-2xl bg-canvas/80 px-3 py-2 text-left hairline-border hover:border-[#FF6B1A] transition">
+                  <span class="text-xs font-bold text-ink">💻 Teman Nugas &amp; WiFi Kencang</span>
+                  <span class="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700">Free WiFi</span>
+                </button>
+                <button type="button" onclick="selectCollection('Traktir Bestie B1G1')" class="w-full flex items-center justify-between rounded-2xl bg-canvas/80 px-3 py-2 text-left hairline-border hover:border-[#FF6B1A] transition">
+                  <span class="text-xs font-bold text-ink">🎁 Traktir Bestie B1G1</span>
+                  <span class="rounded-full bg-accent-50 px-2 py-0.5 text-[10px] font-bold text-accent-600">B1G1</span>
+                </button>
+                <button type="button" onclick="selectCollection('Jajan Malam Hemat')" class="w-full flex items-center justify-between rounded-2xl bg-canvas/80 px-3 py-2 text-left hairline-border hover:border-[#FF6B1A] transition">
+                  <span class="text-xs font-bold text-ink">🌃 Jajan Malam Hemat</span>
+                  <span class="rounded-full bg-subtle px-2 py-0.5 text-[10px] font-bold text-ink">19.00–24.00</span>
+                </button>
+                <button type="button" onclick="applyMaxBudget(15000)" class="w-full flex items-center justify-between rounded-2xl bg-canvas/80 px-3 py-2 text-left hairline-border hover:border-[#FF6B1A] transition">
+                  <span class="text-xs font-bold text-ink">🪙 Promo Akhir Bulan (&lt;15rb)</span>
+                  <span class="rounded-full bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-600">Darurat</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Kolom 3: Kartu Sorotan Promo Spesial Hari Ini -->
+            <div class="lg:col-span-3 rounded-2xl bg-[#181716] p-5 text-white flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-bold text-accent-200">Sorotan Hari Ini</span>
+                  <span class="text-[11px] font-extrabold text-[#FF6B1A]">-50%</span>
+                </div>
+                <img
+                  src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=420&q=80"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x220/262524/FF6B1A?text=Kopi+Kenangan';"
+                  alt="Kopi Kenangan"
+                  class="mt-3 h-24 w-full rounded-xl object-cover"
+                />
+                <h4 class="mt-3 text-sm font-extrabold leading-snug">Diskon 50% Es Kopi Susu Gula Aren</h4>
+                <p class="mt-1 text-[11px] text-white/70">Kopi Kenangan • Cuma <strong class="text-white">Rp 12.000</strong> dari Rp 24.000.</p>
+              </div>
+              <button type="button" onclick="toggleMegaMenu(false); openVoucherModal(1);" class="mt-4 w-full rounded-full bg-[#FF6B1A] py-2.5 text-xs font-bold text-white hover:bg-accent-600 transition">
+                Klaim Promo Sekarang
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobileMenuDrawer" class="hidden md:hidden mt-3 rounded-3xl liquid-glass-panel p-4 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <label for="mobileCitySelect" class="text-xs font-bold text-ink">Pilih Wilayah:</label>
+            <select id="mobileCitySelect" onchange="selectCity(this.value)" class="rounded-full bg-white px-3 py-1.5 text-xs font-bold text-ink hairline-border"></select>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" onclick="selectCategory('Semua Menu', true); toggleMobileMenu(false);" class="rounded-2xl bg-white p-2.5 text-xs font-bold text-ink hairline-border">Semua Menu</button>
+            <button type="button" onclick="selectCategory('Paket Tanggal Tua <20rb', true); toggleMobileMenu(false);" class="rounded-2xl bg-white p-2.5 text-xs font-bold text-accent-600 hairline-border">Tanggal Tua &lt;20rb</button>
+            <button type="button" onclick="selectCategory('Kopi & Minuman', true); toggleMobileMenu(false);" class="rounded-2xl bg-white p-2.5 text-xs font-bold text-ink hairline-border">Kopi &amp; Minuman</button>
+            <button type="button" onclick="selectCategory('Makanan Berat', true); toggleMobileMenu(false);" class="rounded-2xl bg-white p-2.5 text-xs font-bold text-ink hairline-border">Makanan Berat</button>
+            <button type="button" onclick="selectCategory('Mie & Ramen', true); toggleMobileMenu(false);" class="rounded-2xl bg-white p-2.5 text-xs font-bold text-ink hairline-border">Mie &amp; Ramen</button>
+            <button type="button" onclick="selectCategory('Nongkrong Malam', true); toggleMobileMenu(false);" class="rounded-2xl bg-white p-2.5 text-xs font-bold text-ink hairline-border">Nongkrong Malam</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ======================================================================
+         HERO SECTION: WARM ELEGANT DASHBOARD
+         ====================================================================== -->
+    <section id="beranda" class="hero-warm-glow pt-28 sm:pt-36 pb-12 px-4 sm:px-6">
+      <div class="mx-auto max-w-5xl text-center">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-1.5 text-xs font-semibold text-ink hairline-border shadow-sm mb-6">
+          <span class="h-2 w-2 rounded-full bg-[#FF6B1A] animate-pulse"></span>
+          <span>Penyelamat Dompet Anak Muda • Update Promo Harian</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-[62px] font-extrabold tracking-tight text-[#141312] leading-[1.08]">
+          Makan Enak,<br />
+          <span class="text-[#FF6B1A]">Dompet</span> Tetap Aman.
+        </h1>
+
+        <p class="font-body mx-auto mt-4 max-w-xl text-sm sm:text-base text-ink-muted leading-relaxed">
+          Kumpulan promo &amp; diskon cafe, resto, dan kedai kopi terdekat di kotamu. Pas banget buat kamu yang lagi pengen nongkrong tapi tetap hemat.
+        </p>
+
+        <!-- Search Bar -->
+        <div class="mx-auto mt-8 max-w-xl">
+          <div class="flex items-center rounded-full bg-white p-1.5 pl-5 hairline-border shadow-card focus-within:border-[#FF6B1A] transition">
+            <svg class="h-4 w-4 text-ink-light shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              id="heroSearchInput"
+              type="text"
+              oninput="handleSearchInput(this.value)"
+              placeholder="Cari kopi, mie pedas, geprek, atau nama kota..."
+              class="w-full bg-transparent px-3 py-2 text-xs sm:text-sm text-ink placeholder:text-ink-light focus:outline-none"
+            />
+            <button
+              type="button"
+              onclick="scrollToSection('katalog-promo')"
+              class="shrink-0 rounded-full bg-[#FF6B1A] px-5 py-2.5 text-xs sm:text-sm font-bold text-white hover:bg-accent-600 transition"
+            >
+              Cari Promo
+            </button>
+          </div>
+
+          <!-- Quick Shortcut Pills -->
+          <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
+            <button type="button" onclick="applyMaxBudget(20000)" class="rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-semibold text-ink hairline-border hover:border-ink transition">
+              Di Bawah 20rb
+            </button>
+            <button type="button" onclick="selectCategory('Buy 1 Get 1', true)" class="rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-semibold text-ink hairline-border hover:border-ink transition">
+              Buy 1 Get 1
+            </button>
+            <button type="button" onclick="selectCategory('Kopi & Minuman', true)" class="rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-semibold text-ink hairline-border hover:border-ink transition">
+              Diskon Kopi 50%
+            </button>
+            <button type="button" onclick="filterCityAndScroll('Madiun')" class="rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-semibold text-[#FF6B1A] hairline-border hover:border-[#FF6B1A] transition">
+              Promo Madiun
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         MEGA MENU SHOWCASE & PROMO CATALOG GRID
+         ====================================================================== -->
+    <section id="katalog-promo" class="py-10 sm:py-14 px-4 sm:px-6">
+      <div class="mx-auto max-w-6xl">
+
+        <!-- Featured Promo Banner (Inspired by BuruHemat Promo Unggulan) -->
+        <div class="mb-10 rounded-3xl bg-white p-4 sm:p-5 hairline-border shadow-card flex flex-col sm:flex-row items-center justify-between gap-5">
+          <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 w-full">
+            <img
+              src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=80"
+              onerror="this.onerror=null;this.src='https://placehold.co/400x260/FFE6D5/EA580C?text=Kopi+Kenangan';"
+              alt="Kopi Kenangan"
+              class="h-36 sm:h-24 w-full sm:w-40 rounded-2xl object-cover shrink-0"
+            />
+            <div class="text-center sm:text-left">
+              <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                <span class="rounded-full bg-accent-500 px-3 py-0.5 text-[11px] font-extrabold text-white">Promo Unggulan</span>
+                <span class="text-xs font-semibold text-ink-muted">Berlaku Hari Ini</span>
+              </div>
+              <h2 class="mt-1.5 text-lg sm:text-xl font-extrabold text-ink">Kopi Kenangan — Es Kopi Susu Gula Aren</h2>
+              <p class="text-xs text-ink-muted mt-0.5">Hemat 50% jadi <strong class="text-ink">Rp 12.000</strong> (Harga normal Rp 24.000)</p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onclick="openVoucherModal(1)"
+            class="w-full sm:w-auto shrink-0 rounded-full bg-ink px-6 py-3 text-xs font-bold text-white hover:bg-accent-500 transition"
+          >
+            Klaim Voucher →
+          </button>
+        </div>
+
+        <!-- Catalog Header & Mega Menu Filter Pills -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-ink">Eksplor Promo Kuliner</h2>
+            <p class="font-body text-xs sm:text-sm text-ink-muted mt-0.5">Pilih kategori atau wilayah untuk menemukan tempat nongkrong paling pas.</p>
+          </div>
+
+          <div class="flex items-center gap-2 self-start lg:self-auto">
+            <label for="catalogCityDropdown" class="text-xs font-semibold text-ink-muted">Wilayah:</label>
+            <select
+              id="catalogCityDropdown"
+              onchange="selectCity(this.value)"
+              class="rounded-full bg-white px-4 py-2 text-xs font-bold text-ink hairline-border focus:outline-none focus:border-accent-500"
+            >
+              <option value="Semua Wilayah">Semua Wilayah</option>
+              <option value="Madiun">Madiun</option>
+              <option value="Surabaya">Surabaya</option>
+              <option value="Malang">Malang</option>
+              <option value="Jakarta">Jakarta</option>
+              <option value="Bandung">Bandung</option>
+              <option value="Yogyakarta">Yogyakarta</option>
+              <option value="Solo">Solo</option>
+              <option value="Semarang">Semarang</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Active Collection / Budget Banner Indicator -->
+        <div id="activeFilterNotice" class="hidden mb-4 flex items-center justify-between gap-3 rounded-2xl bg-white px-4 py-2.5 hairline-border">
+          <p id="activeFilterNoticeText" class="text-xs font-bold text-ink">Menampilkan koleksi pilihan</p>
+          <button type="button" onclick="resetAllFilters()" class="text-xs font-bold text-[#FF6B1A] hover:underline">
+            Reset Filter ✕
+          </button>
+        </div>
+
+        <!-- 8 Category Filter Pills with Dynamic Counts -->
+        <div id="categoryFilterBar" class="flex flex-wrap items-center gap-2 mb-8"></div>
+
+        <!-- Promo Cards Grid -->
+        <div id="promoCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+        <!-- Show All 24 / Collapse Button -->
+        <div id="showMoreCatalogWrap" class="mt-9 text-center">
+          <button
+            type="button"
+            id="showMoreCatalogBtn"
+            onclick="toggleShowAllMenus()"
+            class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-xs sm:text-sm font-extrabold text-[#141312] hairline-border shadow-card hover:border-[#FF6B1A] hover:text-[#FF6B1A] transition"
+          >
+            <span id="showMoreCatalogLabel">Lihat Semua 24 Menu Promo</span>
+            <span id="showMoreCatalogArrow">↓</span>
+          </button>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyPromoState" class="hidden rounded-3xl bg-white p-12 text-center hairline-border">
+          <p class="text-base font-extrabold text-ink">Belum ada promo yang cocok</p>
+          <p class="font-body text-xs text-ink-muted mt-1">Coba ubah kata kunci pencarian atau pilih wilayah lain.</p>
+          <button type="button" onclick="resetAllFilters()" class="mt-4 rounded-full bg-ink px-5 py-2.5 text-xs font-bold text-white hover:bg-accent-500 transition">
+            Reset Filter
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         ANIMATION 1: STICKY SCROLL BLURRED C-RING & KINETIC QUOTE
+         ====================================================================== -->
+    <section id="kineticSection" class="kinetic-scroll-wrapper bg-canvas">
+      <div class="kinetic-sticky-stage px-4 sm:px-6">
+        <!-- Blurred C-Ring SVG -->
+        <svg id="kineticCRing" class="kinetic-c-ring pointer-events-none absolute w-[290px] h-[290px] sm:w-[420px] sm:h-[420px] opacity-0" viewBox="0 0 200 200" fill="none">
+          <path
+            id="kineticCArcPath"
+            d="M 155 48 A 76 76 0 1 0 155 152"
+            stroke="#FF6B1A"
+            stroke-opacity="0.28"
+            stroke-width="18"
+            stroke-linecap="round"
+            stroke-dasharray="438"
+            stroke-dashoffset="438"
+          />
+        </svg>
+
+        <!-- 3-Line Staggered Kinetic Typography -->
+        <div class="relative z-10 mx-auto max-w-4xl text-center">
+          <p id="kineticLine1" class="kinetic-line text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#141312] opacity-0">
+            “Nongkrong Hemat
+          </p>
+          <p id="kineticLine2" class="kinetic-line mt-2 sm:mt-3 text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#FF6B1A] opacity-0">
+            Is The New
+          </p>
+          <p id="kineticLine3" class="kinetic-line mt-2 sm:mt-3 text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#141312] opacity-0">
+            Lifestyle”
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         ANIMATION 2: 3-CARD FEATURE GRID + 3-TAB SHOWCASE + FAQ ACCORDION
+         ====================================================================== -->
+    <section id="cara-kerja" class="bg-white pb-20 pt-16 px-4 sm:px-6">
+      <div class="mx-auto max-w-5xl">
+        <!-- 3-Card Feature Grid (Mode Hemat Switcher, 1-Klik Voucher, Progress Bar Penghematan) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-16">
+          <!-- Card 1: Mode Hemat Switcher -->
+          <div class="rounded-3xl bg-canvas p-6 hairline-border flex flex-col justify-between">
+            <div>
+              <span class="inline-block rounded-full bg-accent-50 px-3 py-1 text-[10px] font-bold text-accent-600">Mode Hemat</span>
+              <h3 class="mt-3 text-base font-extrabold text-ink">Sesuaikan Isi Dompet</h3>
+              <p class="font-body mt-1 text-xs text-ink-muted leading-relaxed">
+                Ganti mode anggaran sekali klik sesuai kondisi tanggal tua atau awal bulan.
+              </p>
+            </div>
+            <div class="mt-5 grid grid-cols-2 rounded-full bg-white p-1 hairline-border">
+              <button type="button" id="budgetModeOldBtn" onclick="setFeatureBudgetMode('tua')" class="rounded-full bg-ink py-1.5 text-[11px] font-bold text-white transition">
+                Tanggal Tua &lt;15rb
+              </button>
+              <button type="button" id="budgetModeYoungBtn" onclick="setFeatureBudgetMode('muda')" class="rounded-full py-1.5 text-[11px] font-semibold text-ink-muted hover:text-ink transition">
+                Tanggal Muda &lt;25rb
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: 1-Klik Klaim Voucher -->
+          <div class="rounded-3xl bg-canvas p-6 hairline-border flex flex-col justify-between">
+            <div>
+              <span class="inline-block rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-bold text-emerald-700">Instan &amp; Gratis</span>
+              <h3 class="mt-3 text-base font-extrabold text-ink">1-Klik Klaim Voucher</h3>
+              <p class="font-body mt-1 text-xs text-ink-muted leading-relaxed">
+                Langsung dapat kode QR &amp; kode promo tanpa perlu top-up saldo atau syarat ribet.
+              </p>
+            </div>
+            <div class="mt-5 flex items-center justify-between rounded-2xl bg-white px-4 py-2.5 hairline-border">
+              <div>
+                <p class="text-[10px] font-bold text-ink-light">VOUCHER POPULER</p>
+                <p class="font-mono text-xs font-extrabold text-ink">PROMOMU-KK50</p>
+              </div>
+              <button type="button" onclick="openVoucherModal(1)" class="rounded-full bg-[#FF6B1A] px-3.5 py-1.5 text-[11px] font-bold text-white hover:bg-accent-600 transition">
+                Klaim
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3: Progress Bar Penghematan -->
+          <div id="savingsFeatureCard" class="rounded-3xl bg-canvas p-6 hairline-border flex flex-col justify-between">
+            <div>
+              <span class="inline-block rounded-full bg-white px-3 py-1 text-[10px] font-bold text-ink hairline-border">Rata-Rata Hemat</span>
+              <h3 class="mt-3 text-base font-extrabold text-ink">Irit Hingga 48% per Minggu</h3>
+              <p class="font-body mt-1 text-xs text-ink-muted leading-relaxed">
+                Uang jajan tetap aman meski sering ngopi dan makan bareng teman kampus.
+              </p>
+            </div>
+            <div class="mt-5 space-y-2">
+              <div class="flex items-center justify-between text-[11px] font-bold">
+                <span class="text-ink-muted">Penghematan Bulanan</span>
+                <span class="text-[#FF6B1A]">Rp 285.000 / bln</span>
+              </div>
+              <div class="h-2.5 w-full overflow-hidden rounded-full bg-white hairline-border p-0.5">
+                <div id="savingsProgressBar" class="progress-fill h-full rounded-full bg-[#FF6B1A]"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mx-auto max-w-4xl">
+          <div class="text-center mb-10">
+            <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-ink">
+              Tiga langkah biar tetap irit.
+            </h2>
+          </div>
+          <div id="tabGliderBar" class="tab-glider absolute bottom-0 left-0 h-[2px] bg-ink"></div>
+        </div>
+
+        <!-- Tab Showcase Preview Body -->
+        <div class="mt-6 rounded-3xl bg-canvas p-5 sm:p-7 hairline-border">
+          <div id="showcasePreviewBody"></div>
+        </div>
+
+        <!-- Clean FAQ Accordion -->
+        <div class="mt-16 max-w-2xl mx-auto">
+          <h3 class="text-center text-lg sm:text-2xl font-extrabold text-ink mb-6">
+            Pertanyaan yang Sering Diajukan
+          </h3>
+          <div class="space-y-3">
+            <div class="faq-item rounded-2xl bg-canvas hairline-border px-5 py-4" data-open="true">
+              <button type="button" onclick="toggleFaqItem(this)" class="w-full flex items-center justify-between gap-4 text-left text-xs sm:text-sm font-bold text-ink">
+                <span>Apakah klaim voucher di PromoMu benar-benar gratis?</span>
+                <svg class="faq-chevron h-4 w-4 shrink-0 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  <p class="font-body pt-2.5 text-xs text-ink-muted leading-relaxed">
+                    Ya, 100% gratis! Kamu cukup pilih promo yang diinginkan, klik Klaim Promo, lalu tunjukkan kode QR atau kode voucher ke kasir kafe/resto terkait.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item rounded-2xl bg-canvas hairline-border px-5 py-4" data-open="false">
+              <button type="button" onclick="toggleFaqItem(this)" class="w-full flex items-center justify-between gap-4 text-left text-xs sm:text-sm font-bold text-ink">
+                <span>Wilayah mana saja yang sudah tersedia di PromoMu?</span>
+                <svg class="faq-chevron h-4 w-4 shrink-0 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  <p class="font-body pt-2.5 text-xs text-ink-muted leading-relaxed">
+                    Saat ini PromoMu mencakup ratusan mitra kuliner populer di Madiun, Jakarta, Bandung, Yogyakarta, Surabaya, dan Malang, dan terus bertambah setiap minggu.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item rounded-2xl bg-canvas hairline-border px-5 py-4" data-open="false">
+              <button type="button" onclick="toggleFaqItem(this)" class="w-full flex items-center justify-between gap-4 text-left text-xs sm:text-sm font-bold text-ink">
+                <span>Bagaimana cara pemilik kafe atau resto memasang promo?</span>
+                <svg class="faq-chevron h-4 w-4 shrink-0 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  <p class="font-body pt-2.5 text-xs text-ink-muted leading-relaxed">
+                    Klik tombol “Daftarkan Kafe / Resto” di bagian bawah halaman, isi nama outlet dan kontak WhatsApp, dan tim kami akan membantu menayangkan promo pertamamu secara gratis.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         4. PRE-FOOTER CTA + DARK ROUNDED FOOTER CARD + GIANT 'PromoMu®' WORDMARK
+         ====================================================================== -->
+    <section class="bg-canvas pt-20 pb-0">
+      <!-- Pre-Footer CTA Section on Warm Cream (#FAF6F2) -->
+      <div class="mx-auto max-w-2xl px-4 sm:px-6 text-center pb-16">
+        <h2 class="text-3xl sm:text-[42px] font-extrabold tracking-tight text-[#141312] leading-[1.12]">
+          Punya Kafe atau Resto?
+        </h2>
+        <p class="font-body mx-auto mt-3.5 max-w-lg text-xs sm:text-sm text-ink-muted leading-relaxed">
+          Ramaikan tempatmu dengan ribuan anak muda &amp; mahasiswa pencari promo di kotamu. Pasang promo pertamamu gratis!
+        </p>
+
+        <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
+          <button
+            type="button"
+            onclick="scrollToSection('katalog-promo')"
+            class="rounded-full bg-[#181716] px-6 py-3 text-xs sm:text-sm font-bold text-white hover:bg-[#FF6B1A] transition shadow-sm"
+          >
+            Mulai Sekarang
+          </button>
+          <button
+            type="button"
+            onclick="openMerchantModal()"
+            class="rounded-full bg-white px-6 py-3 text-xs sm:text-sm font-bold text-[#141312] hairline-border hover:border-[#141312] transition"
+          >
+            Daftarkan Kafe / Resto
+          </button>
+        </div>
+      </div>
+
+      <!-- Smooth Cream-to-White Backdrop Split Behind the Dark Rounded Footer Card -->
+      <div class="relative px-4 sm:px-6">
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-white" aria-hidden="true"></div>
+
+        <!-- Centered Dark Rounded Footer Container (#181716, border-radius: 32px, max-width: 1180px) -->
+        <footer class="relative z-10 mx-auto max-w-[1180px] rounded-[32px] bg-[#181716] text-white p-7 sm:p-11 lg:pt-[56px] lg:px-[56px] lg:pb-[32px] shadow-[0_24px_60px_-15px_rgba(20,20,20,0.22)]">
+          <!-- Top 4-Column Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-9 lg:gap-8 pb-10">
+            <!-- Col 1: Brand Badge + Wordmark + Description -->
+            <div class="lg:col-span-4">
+              <a href="#beranda" class="inline-flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF6B1A] text-white text-sm font-extrabold">
+                  %
+                </span>
+                <span class="text-xl font-extrabold tracking-tight text-white">
+                  PromoMu
+                </span>
+              </a>
+              <p class="font-body mt-4 max-w-xs text-xs sm:text-[13px] text-white/65 leading-relaxed">
+                Cari Promo, Hemat Setiap Hari. Solusi makan enak &amp; nongkrong asyik tanpa bikin kantong jebol.
+              </p>
+            </div>
+
+            <!-- Col 2: Navigasi -->
+            <div class="lg:col-span-3">
+              <h4 class="text-xs sm:text-sm font-bold text-white tracking-wide">Navigasi</h4>
+              <ul class="mt-4 space-y-2.5 text-xs sm:text-[13px] text-white/65">
+                <li>
+                  <a href="#beranda" class="hover:text-white transition">Beranda</a>
+                </li>
+                <li>
+                  <a href="#katalog-promo" class="hover:text-white transition">Promo Hari Ini</a>
+                </li>
+                <li>
+                  <button type="button" onclick="selectCategory('Semua Menu', true)" class="hover:text-white transition text-left">
+                    Kategori Kuliner
+                  </button>
+                </li>
+                <li>
+                  <a href="#cara-kerja" class="hover:text-white transition">Cara Klaim Voucher</a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Col 3: Wilayah Popular -->
+            <div class="lg:col-span-3">
+              <h4 class="text-xs sm:text-sm font-bold text-white tracking-wide">Wilayah Popular</h4>
+              <ul class="mt-4 space-y-2.5 text-xs sm:text-[13px] text-white/65">
+                <li>
+                  <button type="button" onclick="filterCityAndScroll('Madiun')" class="hover:text-white transition text-left">
+                    Promo Madiun
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onclick="filterCityAndScroll('Jakarta')" class="hover:text-white transition text-left">
+                    Promo Jakarta
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onclick="filterCityAndScroll('Bandung')" class="hover:text-white transition text-left">
+                    Promo Bandung
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onclick="filterCityAndScroll('Yogyakarta')" class="hover:text-white transition text-left">
+                    Promo Yogyakarta
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Col 4: Ikuti Kami (3 Circular Outlined Social Icons) -->
+            <div class="lg:col-span-2">
+              <h4 class="text-xs sm:text-sm font-bold text-white tracking-wide">Ikuti Kami</h4>
+              <div class="mt-4 flex items-center gap-3">
+                <!-- Instagram -->
+                <a
+                  href="#beranda"
+                  aria-label="Instagram"
+                  class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/10 transition"
+                >
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <rect x="3" y="3" width="18" height="18" rx="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                  </svg>
+                </a>
+
+                <!-- TikTok -->
+                <a
+                  href="#beranda"
+                  aria-label="TikTok"
+                  class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/10 transition"
+                >
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                  </svg>
+                </a>
+
+                <!-- YouTube -->
+                <a
+                  href="#beranda"
+                  aria-label="YouTube"
+                  class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/10 transition"
+                >
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <rect x="2.5" y="5.5" width="19" height="13" rx="3.5" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 9.5l5 2.5-5 2.5v-5z" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subtle Horizontal Divider & Bottom Copyright Row -->
+          <div class="border-t border-white/[0.12] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/55">
+            <p>© 2026 PromoMu Indonesia. Semua hak dilindungi.</p>
+            <div class="flex items-center gap-6">
+              <a href="#beranda" class="hover:text-white transition">Syarat &amp; Ketentuan</a>
+              <a href="#beranda" class="hover:text-white transition">Kebijakan Privasi</a>
+            </div>
+          </div>
+        </footer>
+      </div>
+
+      <!-- ====================================================================
+           GIANT BOTTOM 'PromoMu®' WORDMARK SECTION (CLEAN WHITE CANVAS)
+           ==================================================================== -->
+      <div id="giantWordmarkSection" class="bg-white pt-10 sm:pt-14 pb-8 sm:pb-12 px-4 sm:px-6 overflow-hidden">
+        <div class="mx-auto max-w-[1180px] flex items-center justify-center">
+          <div id="giantWordmarkEl" class="giant-wordmark inline-flex items-start justify-center" aria-label="PromoMu®">
+            <span class="wordmark-hover-char text-[#141312]">P</span>
+            <span class="wordmark-hover-char text-[#141312]">r</span>
+            <span class="wordmark-hover-char text-[#141312]">o</span>
+            <span class="wordmark-hover-char text-[#141312]">m</span>
+            <span class="wordmark-hover-char text-[#141312]">o</span>
+            <span class="wordmark-hover-char text-[#FF6B1A]">M</span>
+            <span class="wordmark-hover-char text-[#FF6B1A]">u</span>
+            <span class="wordmark-hover-char ml-0.5 sm:ml-1 mt-[0.14em] text-[0.26em] font-extrabold text-[#FF6B1A]">®</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ========================================================================
+       MODAL 1: IPHONE LIQUID GLASS AUTH MODAL (GOOGLE & APPLE LOGIN)
+       ======================================================================== -->
+  <div id="authModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/40 backdrop-blur-sm">
+    <div class="relative w-full max-w-sm rounded-3xl liquid-glass-panel p-6 sm:p-7">
+      <button type="button" onclick="closeAuthModal()" class="absolute top-5 right-5 flex h-8 w-8 items-center justify-center rounded-full bg-subtle text-xs text-ink-muted hover:text-ink">
+        ✕
+      </button>
+
+      <div class="text-center mb-5">
+        <div class="mx-auto flex h-10 w-10 items-center justify-center rounded-2xl bg-ink text-white font-extrabold text-base mb-3">
+          %
+        </div>
+        <h3 id="authModalHeading" class="text-lg font-extrabold text-ink">Masuk ke PromoMu</h3>
+        <p class="font-body text-xs text-ink-muted mt-1">Simpan voucher hemat &amp; klaim promo lebih cepat.</p>
+      </div>
+
+      <!-- Sign In / Sign Up Switcher -->
+      <div class="grid grid-cols-2 rounded-full bg-subtle p-1 mb-4">
+        <button type="button" id="authTabSignIn" onclick="setAuthMode('signin')" class="rounded-full bg-white py-1.5 text-xs font-bold text-ink shadow-sm">
+          Sign In
+        </button>
+        <button type="button" id="authTabSignUp" onclick="setAuthMode('signup')" class="rounded-full py-1.5 text-xs font-semibold text-ink-muted">
+          Sign Up
+        </button>
+      </div>
+
+      <!-- Lanjutkan dengan Google & Apple -->
+      <div class="space-y-2.5">
+        <button type="button" onclick="simulateOAuthLogin('Google')" class="w-full flex items-center justify-center gap-2.5 rounded-2xl bg-white py-3 px-4 text-xs font-bold text-ink hairline-border hover:border-ink transition">
+          <svg class="h-4 w-4" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z" />
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24z" />
+            <path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14z" />
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96z" />
+          </svg>
+          <span>Lanjutkan dengan Google</span>
+        </button>
+
+        <button type="button" onclick="simulateOAuthLogin('Apple')" class="w-full flex items-center justify-center gap-2.5 rounded-2xl bg-ink py-3 px-4 text-xs font-bold text-white hover:bg-black transition">
+          <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24">
+            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+          </svg>
+          <span>Lanjutkan dengan Apple</span>
+        </button>
+      </div>
+
+      <div class="my-4 flex items-center gap-3 text-[11px] text-ink-light">
+        <div class="h-px flex-1 bg-black/10"></div>
+        <span>atau email</span>
+        <div class="h-px flex-1 bg-black/10"></div>
+      </div>
+
+      <form onsubmit="handleEmailAuthSubmit(event)" class="space-y-2.5">
+        <input id="authEmailField" type="email" required placeholder="nama@email.com" class="w-full rounded-2xl bg-white px-4 py-2.5 text-xs sm:text-sm hairline-border focus:outline-none focus:border-accent-500" />
+        <input type="password" required placeholder="Kata sandi" class="w-full rounded-2xl bg-white px-4 py-2.5 text-xs sm:text-sm hairline-border focus:outline-none focus:border-accent-500" />
+        <button type="submit" id="authSubmitBtn" class="w-full rounded-2xl bg-accent-500 py-2.5 text-xs sm:text-sm font-bold text-white hover:bg-accent-600 transition">
+          Masuk Sekarang
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: VOUCHER QR MODAL
+       ======================================================================== -->
+  <div id="voucherQrModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/45 backdrop-blur-sm">
+    <div class="relative w-full max-w-sm rounded-3xl bg-white p-6 hairline-border shadow-2xl text-center">
+      <button type="button" onclick="closeVoucherModal()" class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-subtle text-xs text-ink-muted hover:text-ink">
+        ✕
+      </button>
+
+      <span class="inline-block rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold text-emerald-700">
+        Voucher Siap Digunakan
+      </span>
+      <h3 id="qrMerchantName" class="text-lg font-extrabold text-ink mt-2.5">Kopi Kenangan</h3>
+      <p id="qrPromoTitle" class="text-xs font-semibold text-accent-600">Es Kopi Susu Gula Aren</p>
+      <p id="qrOutletAddress" class="font-body text-[11px] text-ink-muted mt-1">Jl. Pahlawan No. 42, Madiun</p>
+
+      <!-- Generated QR Graphic & Copyable Voucher Code -->
+      <div class="my-5 rounded-2xl bg-canvas p-4 hairline-border">
+        <div class="mx-auto h-32 w-32 rounded-xl bg-white p-2.5 hairline-border flex items-center justify-center">
+          <svg class="h-full w-full text-ink" viewBox="0 0 100 100" fill="currentColor">
+            <rect x="10" y="10" width="24" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="6" />
+            <rect x="16" y="16" width="12" height="12" />
+            <rect x="66" y="10" width="24" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="6" />
+            <rect x="72" y="16" width="12" height="12" />
+            <rect x="10" y="66" width="24" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="6" />
+            <rect x="16" y="72" width="12" height="12" />
+            <rect x="44" y="14" width="12" height="12" />
+            <rect x="14" y="44" width="16" height="10" />
+            <rect x="44" y="44" width="12" height="12" fill="#EA580C" />
+            <rect x="68" y="44" width="18" height="10" />
+            <rect x="44" y="68" width="14" height="18" />
+            <rect x="68" y="70" width="18" height="16" />
+          </svg>
+        </div>
+
+        <div class="mt-3.5 flex items-center justify-center gap-2">
+          <span id="qrVoucherCode" class="rounded-xl bg-white px-3.5 py-1.5 font-mono text-xs sm:text-sm font-extrabold text-ink hairline-border">
+            PROMOMU-KK50
+          </span>
+          <button type="button" onclick="copyVoucherCode()" class="rounded-xl bg-ink px-3 py-1.5 text-xs font-bold text-white hover:bg-accent-500 transition">
+            Salin
+          </button>
+        </div>
+      </div>
+
+      <p id="qrPriceSummary" class="text-xs font-bold text-ink mb-4">Bayar Rp 12.000 di kasir</p>
+
+      <div class="grid grid-cols-2 gap-2.5">
+        <a
+          id="qrWhatsappLink"
+          href="https://wa.me/?text=Halo%20PromoMu"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-full bg-emerald-600 py-2.5 text-xs font-bold text-white hover:bg-emerald-700 transition"
+        >
+          Klaim via WhatsApp
+        </a>
+        <button type="button" onclick="closeVoucherModal()" class="rounded-full bg-subtle py-2.5 text-xs font-bold text-ink hover:bg-black/10 transition">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 3: DAFTARKAN KAFE / RESTO MODAL
+       ======================================================================== -->
+  <div id="merchantModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/45 backdrop-blur-sm">
+    <div class="relative w-full max-w-sm rounded-3xl bg-white p-6 hairline-border shadow-2xl">
+      <button type="button" onclick="closeMerchantModal()" class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-subtle text-xs text-ink-muted hover:text-ink">
+        ✕
+      </button>
+      <span class="inline-block rounded-full bg-accent-50 px-3 py-1 text-[11px] font-bold text-accent-600">Mitra Kuliner</span>
+      <h3 class="text-lg font-extrabold text-ink mt-2">Daftarkan Kafe / Resto</h3>
+      <p class="font-body text-xs text-ink-muted mt-1 mb-4">Jangkau ribuan anak muda &amp; mahasiswa di kotamu secara gratis.</p>
+      <form onsubmit="submitMerchantForm(event)" class="space-y-3">
+        <input type="text" required placeholder="Nama Kafe / Resto" class="w-full rounded-2xl bg-canvas px-4 py-2.5 text-xs hairline-border focus:outline-none focus:border-accent-500" />
+        <select class="w-full rounded-2xl bg-canvas px-4 py-2.5 text-xs font-semibold text-ink hairline-border focus:outline-none">
+          <option>Madiun</option>
+          <option>Surabaya</option>
+          <option>Malang</option>
+          <option>Jakarta</option>
+          <option>Bandung</option>
+          <option>Yogyakarta</option>
+          <option>Solo</option>
+          <option>Semarang</option>
+        </select>
+        <input type="tel" required placeholder="Nomor WhatsApp Pengelola" class="w-full rounded-2xl bg-canvas px-4 py-2.5 text-xs hairline-border focus:outline-none focus:border-accent-500" />
+        <button type="submit" class="w-full rounded-full bg-ink py-2.5 text-xs font-bold text-white hover:bg-accent-500 transition">
+          Kirim Pendaftaran Mitra
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       TOAST NOTIFICATION
+       ======================================================================== -->
+  <div id="toastBanner" class="pointer-events-none fixed bottom-5 right-5 z-50 translate-y-16 opacity-0 transition-all duration-300">
+    <div class="rounded-full bg-ink px-4 py-2.5 text-xs font-semibold text-white shadow-lg">
+      <span id="toastMessage">Notifikasi</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       JAVASCRIPT: DATA, FILTERS, AND 60FPS SCROLL-DRIVEN ANIMATIONS
+       ======================================================================== -->
+  <script>
+    const PROMO_ITEMS = [
+      {
+        id: 1,
+        merchant: "Kopi Kenangan",
+        menu: "Es Kopi Susu Gula Aren (Large)",
+        category: "Kopi & Minuman",
+        tags: ["Semua Menu", "Kopi & Minuman", "Paket Tanggal Tua <20rb"],
+        collections: ["Sarapan & Ngopi Pagi", "Teman Nugas & WiFi Kencang"],
+        city: "Madiun",
+        distance: "0.7 km",
+        address: "Jl. Pahlawan No. 42, Kartoharjo, Madiun",
+        badge: "Diskon 50%",
+        validUntil: "Berlaku Hari Ini",
+        oldPrice: 24000,
+        promoPrice: 12000,
+        code: "PROMOMU-KK50",
+        img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 2,
+        merchant: "Mie Gacoan",
+        menu: "Mie Hompimpa + Udang Keju",
+        category: "Mie & Ramen",
+        tags: ["Semua Menu", "Mie & Ramen", "Paket Tanggal Tua <20rb", "Nongkrong Malam"],
+        collections: ["Makan Siang Mahasiswa", "Jajan Malam Hemat"],
+        city: "Surabaya",
+        distance: "1.1 km",
+        address: "Jl. Ambengan No. 51, Genteng, Surabaya",
+        badge: "Hemat 40%",
+        validUntil: "s/d 30 Nov 2026",
+        oldPrice: 25000,
+        promoPrice: 15000,
+        code: "GACOAN-SBY15",
+        img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 3,
+        merchant: "Chatime Indonesia",
+        menu: "Hazelnut Chocolate Milk Tea (2 Cup)",
+        category: "Kopi & Minuman",
+        tags: ["Semua Menu", "Kopi & Minuman", "Buy 1 Get 1"],
+        collections: ["Traktir Bestie B1G1"],
+        city: "Malang",
+        distance: "0.9 km",
+        address: "Jl. Soekarno Hatta No. 18, Lowokwaru, Malang",
+        badge: "Buy 1 Get 1",
+        validUntil: "Setiap Hari",
+        oldPrice: 52000,
+        promoPrice: 26000,
+        code: "CHATIME-BOGO",
+        img: "https://images.unsplash.com/photo-1558857563-b371033873b8?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 4,
+        merchant: "Ayam Geprek Bensu",
+        menu: "Paket Geprek Sambal Bawang + Es Teh",
+        category: "Makanan Berat",
+        tags: ["Semua Menu", "Makanan Berat", "Paket Tanggal Tua <20rb"],
+        collections: ["Makan Siang Mahasiswa"],
+        city: "Yogyakarta",
+        distance: "1.3 km",
+        address: "Jl. Kaliurang KM 5, Sleman, Yogyakarta",
+        badge: "Tanggal Tua",
+        validUntil: "Berlaku Hari Ini",
+        oldPrice: 26000,
+        promoPrice: 14000,
+        code: "GEPREK-JOG14",
+        img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 5,
+        merchant: "Roti’O",
+        menu: "2 Coffee Bun Hangat + Iced Kopi Aren",
+        category: "Camilan & Dessert",
+        tags: ["Semua Menu", "Camilan & Dessert", "Buy 1 Get 1"],
+        collections: ["Sarapan & Ngopi Pagi", "Traktir Bestie B1G1"],
+        city: "Jakarta",
+        distance: "0.5 km",
+        address: "Stasiun Sudirman Lt. 1, Jakarta Pusat",
+        badge: "Hemat 18rb",
+        validUntil: "s/d 30 Nov 2026",
+        oldPrice: 40000,
+        promoPrice: 22000,
+        code: "ROTIO-JKT22",
+        img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 6,
+        merchant: "Kopi Tuku",
+        menu: "Es Kopi Susu Tetangga + Donat Kampung",
+        category: "Kopi & Minuman",
+        tags: ["Semua Menu", "Kopi & Minuman", "Paket Tanggal Tua <20rb"],
+        collections: ["Sarapan & Ngopi Pagi", "Teman Nugas & WiFi Kencang"],
+        city: "Bandung",
+        distance: "1.4 km",
+        address: "Jl. Cihampelas No. 112, Bandung",
+        badge: "Diskon 38%",
+        validUntil: "Berlaku Hari Ini",
+        oldPrice: 29000,
+        promoPrice: 18000,
+        code: "TUKU-BDG18",
+        img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 7,
+        merchant: "Kedai Kopi Sareng",
+        menu: "Caramel Croffle + Iced Matcha Latte",
+        category: "Camilan & Dessert",
+        tags: ["Semua Menu", "Camilan & Dessert", "Paket Tanggal Tua <20rb", "Nongkrong Malam"],
+        collections: ["Teman Nugas & WiFi Kencang", "Jajan Malam Hemat"],
+        city: "Madiun",
+        distance: "0.6 km",
+        address: "Jl. Cokroaminoto No. 88, Taman, Madiun",
+        badge: "Diskon 52%",
+        validUntil: "Setiap Hari",
+        oldPrice: 35000,
+        promoPrice: 16800,
+        code: "SARENG-MDN16",
+        img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 8,
+        merchant: "RamenYA!",
+        menu: "Legendary Chicken Ramen (2 Mangkok)",
+        category: "Mie & Ramen",
+        tags: ["Semua Menu", "Mie & Ramen", "Buy 1 Get 1"],
+        collections: ["Traktir Bestie B1G1", "Makan Siang Mahasiswa"],
+        city: "Surabaya",
+        distance: "1.9 km",
+        address: "Tunjungan Plaza 3 Lt. 5, Surabaya",
+        badge: "Buy 1 Get 1",
+        validUntil: "s/d 30 Nov 2026",
+        oldPrice: 56000,
+        promoPrice: 28000,
+        code: "RAMENYA-BOGO",
+        img: "https://images.unsplash.com/photo-1557872943-16a5ac26437e?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 9,
+        merchant: "Mochi & Matcha House",
+        menu: "Box 4 Mochi Daifuku Strawberry",
+        category: "Camilan & Dessert",
+        tags: ["Semua Menu", "Camilan & Dessert", "Paket Tanggal Tua <20rb"],
+        collections: ["Jajan Malam Hemat"],
+        city: "Yogyakarta",
+        distance: "0.8 km",
+        address: "Jl. Prawirotaman No. 21, Yogyakarta",
+        badge: "Hemat 15rb",
+        validUntil: "Berlaku Hari Ini",
+        oldPrice: 32500,
+        promoPrice: 17500,
+        code: "MOCHI-YGY17",
+        img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 10,
+        merchant: "Janji Jiwa Toast",
+        menu: "Crispy Chicken Mentai Toast + Kopi Soklat",
+        category: "Makanan Berat",
+        tags: ["Semua Menu", "Makanan Berat", "Paket Tanggal Tua <20rb"],
+        collections: ["Sarapan & Ngopi Pagi", "Makan Siang Mahasiswa"],
+        city: "Solo",
+        distance: "0.9 km",
+        address: "Jl. Slamet Riyadi No. 214, Laweyan, Solo",
+        badge: "Diskon 45%",
+        validUntil: "Berlaku Hari Ini",
+        oldPrice: 34000,
+        promoPrice: 18500,
+        code: "JIWA-SLO18",
+        img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 11,
+        merchant: "Warkop Naik Kelas",
+        menu: "Indomie Nyemek Spesial + Es Teh Tarik",
+        category: "Mie & Ramen",
+        tags: ["Semua Menu", "Mie & Ramen", "Paket Tanggal Tua <20rb", "Nongkrong Malam"],
+        collections: ["Jajan Malam Hemat", "Teman Nugas & WiFi Kencang"],
+        city: "Semarang",
+        distance: "1.2 km",
+        address: "Jl. Pandanaran No. 67, Semarang Tengah",
+        badge: "Tanggal Tua",
+        validUntil: "19.00–24.00 WIB",
+        oldPrice: 22000,
+        promoPrice: 11000,
+        code: "WARKOP-SMG11",
+        img: "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 12,
+        merchant: "Mixue Ice Cream & Tea",
+        menu: "Boba Sundae + Fresh Squeezed Lemonade (2 Cup)",
+        category: "Kopi & Minuman",
+        tags: ["Semua Menu", "Kopi & Minuman", "Paket Tanggal Tua <20rb", "Buy 1 Get 1"],
+        collections: ["Traktir Bestie B1G1", "Sarapan & Ngopi Pagi"],
+        city: "Madiun",
+        distance: "0.4 km",
+        address: "Jl. Diponegoro No. 19, Oro-oro Ombo, Madiun",
+        badge: "Buy 1 Get 1",
+        validUntil: "Setiap Hari",
+        oldPrice: 26000,
+        promoPrice: 13000,
+        code: "MIXUE-MDN13",
+        img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 13,
+        merchant: "Fore Coffee",
+        menu: "Butterscotch Sea Salt Latte (Regular)",
+        category: "Kopi & Minuman",
+        tags: ["Semua Menu", "Kopi & Minuman", "Paket Tanggal Tua <20rb"],
+        collections: ["Teman Nugas & WiFi Kencang", "Sarapan & Ngopi Pagi"],
+        city: "Jakarta",
+        distance: "0.8 km",
+        address: "Jl. Melawai Raya No. 28, Kebayoran Baru, Jakarta",
+        badge: "Diskon 48%",
+        validUntil: "Berlaku Hari Ini",
+        oldPrice: 33000,
+        promoPrice: 17000,
+        code: "FORE-JKT17",
+        img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 14,
+        merchant: "Chicken Katsu Kita",
+        menu: "Nasi Chicken Katsu Curry + Miso Soup",
+        category: "Makanan Berat",
+        tags: ["Semua Menu", "Makanan Berat", "Paket Tanggal Tua <20rb"],
+        collections: ["Makan Siang Mahasiswa"],
+        city: "Malang",
+        distance: "1.0 km",
+        address: "Jl. Veteran No. 14, Klojen, Malang",
+        badge: "Hemat 15rb",
+        validUntil: "s/d 30 Nov 2026",
+        oldPrice: 34000,
+        promoPrice: 19000,
+        code: "KATSU-MLG19",
+        img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 15,
+        merchant: "Bakmi Sedjuk & Kopi",
+        menu: "Bakmi Ayam Oven Sambal Matah",
+        category: "Mie & Ramen",
+        tags: ["Semua Menu", "Mie & Ramen", "Paket Tanggal Tua <20rb"],
+        collections: ["Makan Siang Mahasiswa", "Teman Nugas & WiFi Kencang"],
+        city: "Bandung",
+        distance: "1.3 km",
+        address: "Jl. Riau No. 95, Citarum, Bandung",
+        badge: "Diskon 42%",
+        validUntil: "Setiap Hari",
+        oldPrice: 31000,
+        promoPrice: 18000,
+        code: "SEDJUK-BDG18",
+        img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 16,
+        merchant: "Angkringan Modern Mas Brewok",
+        menu: "Paket Nasi Kucing 2 Porsi + 3 Sate + Wedang Jahe",
+        category: "Nongkrong Malam",
+        tags: ["Semua Menu", "Nongkrong Malam", "Paket Tanggal Tua <20rb", "Makanan Berat"],
+        collections: ["Jajan Malam Hemat"],
+        city: "Solo",
+        distance: "0.7 km",
+        address: "Jl. Ronggowarsito No. 33, Banjarsari, Solo",
+        badge: "Tanggal Tua",
+        validUntil: "18.00–01.00 WIB",
+        oldPrice: 22000,
+        promoPrice: 12500,
+        code: "ANGK-SLO12",
+        img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 17,
+        merchant: "Pukis & Pancong Lumer 99",
+        menu: "Pancong Cokelat Keju Lumer (2 Loyang)",
+        category: "Camilan & Dessert",
+        tags: ["Semua Menu", "Camilan & Dessert", "Nongkrong Malam", "Buy 1 Get 1"],
+        collections: ["Jajan Malam Hemat", "Traktir Bestie B1G1"],
+        city: "Surabaya",
+        distance: "1.5 km",
+        address: "Jl. Dharmawangsa No. 72, Gubeng, Surabaya",
+        badge: "Buy 1 Get 1",
+        validUntil: "17.00–23.30 WIB",
+        oldPrice: 30000,
+        promoPrice: 15000,
+        code: "PANCONG-SBY15",
+        img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 18,
+        merchant: "Haus! Indonesia",
+        menu: "Thai Tea & Choco Cheese (2 Cup Large)",
+        category: "Kopi & Minuman",
+        tags: ["Semua Menu", "Kopi & Minuman", "Paket Tanggal Tua <20rb", "Buy 1 Get 1"],
+        collections: ["Traktir Bestie B1G1"],
+        city: "Semarang",
+        distance: "0.6 km",
+        address: "Jl. Prof. Soedarto No. 40, Tembalang, Semarang",
+        badge: "Buy 1 Get 1",
+        validUntil: "Berlaku Hari Ini",
+        oldPrice: 28000,
+        promoPrice: 14000,
+        code: "HAUS-SMG14",
+        img: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 19,
+        merchant: "Nasi Goreng Kambing & Ayam Kebon",
+        menu: "Nasi Goreng Ayam Kampung + Telur Ceplok",
+        category: "Makanan Berat",
+        tags: ["Semua Menu", "Makanan Berat", "Nongkrong Malam", "Paket Tanggal Tua <20rb"],
+        collections: ["Jajan Malam Hemat", "Makan Siang Mahasiswa"],
+        city: "Madiun",
+        distance: "1.0 km",
+        address: "Jl. Urip Sumoharjo No. 115, Manguharjo, Madiun",
+        badge: "Hemat 12rb",
+        validUntil: "17.00–24.00 WIB",
+        oldPrice: 28000,
+        promoPrice: 16000,
+        code: "NASGOR-MDN16",
+        img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 20,
+        merchant: "Kopi Nako",
+        menu: "Es Kopi Nako Duren + Cireng Bumbu Rujak",
+        category: "Camilan & Dessert",
+        tags: ["Semua Menu", "Camilan & Dessert", "Nongkrong Malam"],
+        collections: ["Teman Nugas & WiFi Kencang", "Jajan Malam Hemat"],
+        city: "Yogyakarta",
+        distance: "1.6 km",
+        address: "Jl. Ring Road Utara, Depok, Sleman, Yogyakarta",
+        badge: "Diskon 40%",
+        validUntil: "Setiap Hari",
+        oldPrice: 38000,
+        promoPrice: 22500,
+        code: "NAKO-YGY22",
+        img: "https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 21,
+        merchant: "Suki & Grill Rakyat",
+        menu: "Paket All You Can Eat Grill & Suki 60 Menit",
+        category: "Makanan Berat",
+        tags: ["Semua Menu", "Makanan Berat", "Nongkrong Malam"],
+        collections: ["All You Can Eat Hemat", "Makan Siang Mahasiswa"],
+        city: "Malang",
+        distance: "1.8 km",
+        address: "Jl. Ijen No. 45, Oro-oro Dowo, Malang",
+        badge: "AYCE Hemat",
+        validUntil: "Senin–Jumat",
+        oldPrice: 55000,
+        promoPrice: 28000,
+        code: "AYCE-MLG28",
+        img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 22,
+        merchant: "Udon & Tempura Express",
+        menu: "Niku Udon Kuah Dashi + Crispy Chikuwa",
+        category: "Mie & Ramen",
+        tags: ["Semua Menu", "Mie & Ramen"],
+        collections: ["Makan Siang Mahasiswa"],
+        city: "Jakarta",
+        distance: "1.1 km",
+        address: "FX Sudirman Lt. FB, Senayan, Jakarta",
+        badge: "Hemat 15rb",
+        validUntil: "s/d 30 Nov 2026",
+        oldPrice: 39000,
+        promoPrice: 24000,
+        code: "UDON-JKT24",
+        img: "https://images.unsplash.com/photo-1618841557871-b4664fbf0cb3?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 23,
+        merchant: "Bubur Ayam & Kopi Pagi Kang Ujang",
+        menu: "Bubur Ayam Komplit + Es Kopi Susu Pagi",
+        category: "Makanan Berat",
+        tags: ["Semua Menu", "Makanan Berat", "Paket Tanggal Tua <20rb"],
+        collections: ["Sarapan & Ngopi Pagi"],
+        city: "Bandung",
+        distance: "0.5 km",
+        address: "Jl. Dipatiukur No. 64, Coblong, Bandung",
+        badge: "Tanggal Tua",
+        validUntil: "06.00–11.00 WIB",
+        oldPrice: 21000,
+        promoPrice: 10500,
+        code: "BUBUR-BDG10",
+        img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 24,
+        merchant: "Dimsum & Teh Tarik 24 Jam",
+        menu: "1 Porsi Dimsum Mentai (4 pcs) + Teh Tarik Dingin",
+        category: "Camilan & Dessert",
+        tags: ["Semua Menu", "Camilan & Dessert", "Paket Tanggal Tua <20rb", "Nongkrong Malam"],
+        collections: ["Jajan Malam Hemat", "Teman Nugas & WiFi Kencang"],
+        city: "Solo",
+        distance: "1.0 km",
+        address: "Jl. Dr. Moewardi No. 19, Manahan, Solo",
+        badge: "Diskon 50%",
+        validUntil: "Buka 24 Jam",
+        oldPrice: 28000,
+        promoPrice: 14000,
+        code: "DIMSUM-SLO14",
+        img: "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=700&q=80"
+      }
+    ];
+
+    const CATEGORY_TABS = [
+      "Semua Menu",
+      "Kopi & Minuman",
+      "Makanan Berat",
+      "Camilan & Dessert",
+      "Mie & Ramen",
+      "Paket Tanggal Tua <20rb",
+      "Buy 1 Get 1",
+      "Nongkrong Malam"
+    ];
+
+    const CITIES = ["Semua Wilayah", "Madiun", "Surabaya", "Malang", "Jakarta", "Bandung", "Yogyakarta", "Solo", "Semarang"];
+
+    const state = {
+      activeFilter: "Semua Menu",
+      activeCity: "Semua Wilayah",
+      activeCollection: null,
+      maxBudget: null,
+      searchQuery: "",
+      showAll: false,
+      user: null,
+      claimedIds: [],
+      savedIds: [1, 7, 12],
+      activeTab: 0,
+      tabInterval: null
+    };
+
+    const formatRp = (num) => "Rp " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
+    const smoothstep = (edge0, edge1, x) => {
+      const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+      return t * t * (3 - 2 * t);
+    };
+
+    // ========================================================================
+    // INITIALIZE APP & ANIMATION ENGINES
+    // ========================================================================
+    window.addEventListener("DOMContentLoaded", () => {
+      renderCityMenus();
+      renderCategoryFilterBar();
+      renderPromoCards();
+      setShowcaseTab(0, false);
+      startShowcaseAutoCycle();
+      initScrollAnimations();
+      initSavingsProgressObserver();
+      initGlobalDismissListeners();
+    });
+
+    // ========================================================================
+    // 1. NAVIGATION DROPDOWNS & CATALOG FILTERING
+    // ========================================================================
+    function toggleMegaMenu(force) {
+      const panel = document.getElementById("megaMenuDropdown");
+      const chevron = document.getElementById("megaChevron");
+      const cityPanel = document.getElementById("cityDropdownMenu");
+      if (!panel) return;
+
+      const shouldOpen = typeof force === "boolean" ? force : panel.classList.contains("hidden");
+      panel.classList.toggle("hidden", !shouldOpen);
+      if (chevron) chevron.classList.toggle("rotate-180", shouldOpen);
+      if (shouldOpen && cityPanel) cityPanel.classList.add("hidden");
+    }
+
+    function toggleCityMenu(force) {
+      const cityPanel = document.getElementById("cityDropdownMenu");
+      const megaPanel = document.getElementById("megaMenuDropdown");
+      const chevron = document.getElementById("megaChevron");
+      if (!cityPanel) return;
+
+      const shouldOpen = typeof force === "boolean" ? force : cityPanel.classList.contains("hidden");
+      cityPanel.classList.toggle("hidden", !shouldOpen);
+      if (shouldOpen && megaPanel) {
+        megaPanel.classList.add("hidden");
+        if (chevron) chevron.classList.remove("rotate-180");
+      }
+    }
+
+    function toggleMobileMenu(force) {
+      const drawer = document.getElementById("mobileMenuDrawer");
+      if (!drawer) return;
+      const shouldOpen = typeof force === "boolean" ? force : drawer.classList.contains("hidden");
+      drawer.classList.toggle("hidden", !shouldOpen);
+    }
+
+    function initGlobalDismissListeners() {
+      document.addEventListener("click", (e) => {
+        const megaWrap = document.getElementById("megaMenuTriggerWrap");
+        const megaPanel = document.getElementById("megaMenuDropdown");
+        if (megaWrap && megaPanel && !megaWrap.contains(e.target) && !megaPanel.contains(e.target)) {
+          toggleMegaMenu(false);
+        }
+
+        const cityWrap = document.getElementById("cityTriggerWrap");
+        if (cityWrap && !cityWrap.contains(e.target)) {
+          toggleCityMenu(false);
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          toggleMegaMenu(false);
+          toggleCityMenu(false);
+          closeAuthModal();
+          closeVoucherModal();
+          closeMerchantModal();
+        }
+      });
+    }
+
+    function renderCityMenus() {
+      const headerList = document.getElementById("headerCityList");
+      const mobileSel = document.getElementById("mobileCitySelect");
+
+      if (headerList) {
+        headerList.innerHTML = CITIES.map(city => `
+          <button
+            type="button"
+            onclick="selectCity('${city}'); toggleCityMenu(false);"
+            class="w-full flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold text-left transition ${state.activeCity === city ? 'bg-ink text-white' : 'text-ink hover:bg-subtle'}"
+          >
+            <span>${city}</span>
+            ${state.activeCity === city ? '<span>✓</span>' : ''}
+          </button>
+        `).join("");
+      }
+
+      if (mobileSel) {
+        mobileSel.innerHTML = CITIES.map(city => `
+          <option value="${city}" ${state.activeCity === city ? 'selected' : ''}>${city}</option>
+        `).join("");
+      }
+    }
+
+    function selectCity(city) {
+      state.activeCity = city;
+      const label = document.getElementById("headerCityLabel");
+      const dropdown = document.getElementById("catalogCityDropdown");
+      if (label) label.textContent = city === "Semua Wilayah" ? "Wilayah" : city;
+      if (dropdown) dropdown.value = city;
+      renderCityMenus();
+      renderPromoCards();
+      showToast(`Menampilkan promo di ${city}`);
+    }
+
+    function filterCityAndScroll(city) {
+      selectCity(city);
+      scrollToSection("katalog-promo");
+    }
+
+    function toggleFaqItem(btn) {
+      const item = btn.closest(".faq-item");
+      if (!item) return;
+      const isOpen = item.getAttribute("data-open") === "true";
+      item.setAttribute("data-open", isOpen ? "false" : "true");
+    }
+
+    function getCategoryCount(catName) {
+      return PROMO_ITEMS.filter((item) => {
+        const matchCity = state.activeCity === "Semua Wilayah" || item.city === state.activeCity;
+        return matchCity && item.tags.includes(catName);
+      }).length;
+    }
+
+    function renderCategoryFilterBar() {
+      const bar = document.getElementById("categoryFilterBar");
+      if (!bar) return;
+
+      bar.innerHTML = CATEGORY_TABS.map((cat) => {
+        const count = getCategoryCount(cat);
+        const isActive = state.maxBudget === null && state.activeCollection === null && cat === state.activeFilter;
+        const labelText = cat === "Paket Tanggal Tua <20rb" ? "Paket Tanggal Tua (&lt;20rb)" : cat;
+        return `
+          <button
+            type="button"
+            data-filter="${cat}"
+            onclick="selectCategory('${cat}')"
+            class="filter-pill inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs transition ${
+              isActive
+                ? 'bg-ink font-bold text-white shadow-xs'
+                : 'bg-white font-semibold text-ink hairline-border hover:border-ink'
+            }"
+          >
+            <span>${labelText}</span>
+            <span class="rounded-full px-1.5 py-0.5 text-[10px] font-extrabold ${
+              isActive ? 'bg-white/20 text-white' : 'bg-subtle text-ink-muted'
+            }">${count}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function updateActiveFilterNotice() {
+      const box = document.getElementById("activeFilterNotice");
+      const textEl = document.getElementById("activeFilterNoticeText");
+      if (!box || !textEl) return;
+
+      if (state.activeCollection) {
+        box.classList.remove("hidden");
+        textEl.textContent = `Koleksi Spesial: ${state.activeCollection}`;
+      } else if (state.maxBudget !== null) {
+        box.classList.remove("hidden");
+        textEl.textContent = `Mode Hemat: Menu di Bawah ${formatRp(state.maxBudget)}`;
+      } else {
+        box.classList.add("hidden");
+      }
+    }
+
+    function selectCategory(filterName, scroll = false) {
+      state.activeFilter = filterName;
+      state.maxBudget = null;
+      state.activeCollection = null;
+      toggleMegaMenu(false);
+      updateActiveFilterNotice();
+      renderCategoryFilterBar();
+      renderPromoCards();
+      if (scroll) scrollToSection("katalog-promo");
+    }
+
+    function selectCollection(collectionName) {
+      state.activeCollection = collectionName;
+      state.activeFilter = "Semua Menu";
+      state.maxBudget = null;
+      toggleMegaMenu(false);
+      updateActiveFilterNotice();
+      renderCategoryFilterBar();
+      renderPromoCards();
+      scrollToSection("katalog-promo");
+      showToast(`Menampilkan koleksi: ${collectionName}`);
+    }
+
+    function applyMaxBudget(maxRp) {
+      state.maxBudget = maxRp;
+      state.activeFilter = "Semua Menu";
+      state.activeCollection = null;
+      toggleMegaMenu(false);
+      updateActiveFilterNotice();
+      renderCategoryFilterBar();
+      renderPromoCards();
+      scrollToSection("katalog-promo");
+      showToast(`Menampilkan menu di bawah ${formatRp(maxRp)}`);
+    }
+
+    function handleSearchInput(query) {
+      state.searchQuery = query.trim().toLowerCase();
+      renderPromoCards();
+    }
+
+    function toggleShowAllMenus() {
+      state.showAll = !state.showAll;
+      renderPromoCards();
+      if (!state.showAll) {
+        scrollToSection("katalog-promo");
+      }
+    }
+
+    function resetAllFilters() {
+      state.activeFilter = "Semua Menu";
+      state.activeCity = "Semua Wilayah";
+      state.activeCollection = null;
+      state.maxBudget = null;
+      state.searchQuery = "";
+      state.showAll = false;
+
+      const searchInput = document.getElementById("heroSearchInput");
+      if (searchInput) searchInput.value = "";
+      const cityDrop = document.getElementById("catalogCityDropdown");
+      if (cityDrop) cityDrop.value = "Semua Wilayah";
+      const cityLabel = document.getElementById("headerCityLabel");
+      if (cityLabel) cityLabel.textContent = "Wilayah";
+
+      renderCityMenus();
+      updateActiveFilterNotice();
+      renderCategoryFilterBar();
+      renderPromoCards();
+      showToast("Semua filter telah direset");
+    }
+
+    function scrollToSection(sectionId) {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function toggleSavePromo(promoId, event) {
+      if (event) event.stopPropagation();
+      const idx = state.savedIds.indexOf(promoId);
+      if (idx === -1) {
+        state.savedIds.push(promoId);
+        showToast("Promo disimpan ke Favorit");
+      } else {
+        state.savedIds.splice(idx, 1);
+        showToast("Promo dihapus dari Favorit");
+      }
+      renderPromoCards();
+      if (state.activeTab === 2) setShowcaseTab(2, false);
+    }
+
+    function renderPromoCards() {
+      const grid = document.getElementById("promoCardsGrid");
+      const emptyState = document.getElementById("emptyPromoState");
+      const showMoreWrap = document.getElementById("showMoreCatalogWrap");
+      const showMoreLabel = document.getElementById("showMoreCatalogLabel");
+      const showMoreArrow = document.getElementById("showMoreCatalogArrow");
+      if (!grid || !emptyState) return;
+
+      renderCategoryFilterBar();
+
+      const filtered = PROMO_ITEMS.filter((item) => {
+        const matchCity = state.activeCity === "Semua Wilayah" || item.city === state.activeCity;
+        const matchCollection = !state.activeCollection || (item.collections && item.collections.includes(state.activeCollection));
+        const matchCategory = state.maxBudget !== null
+          ? item.promoPrice <= state.maxBudget
+          : item.tags.includes(state.activeFilter);
+        const matchQuery = !state.searchQuery ||
+          item.merchant.toLowerCase().includes(state.searchQuery) ||
+          item.menu.toLowerCase().includes(state.searchQuery) ||
+          item.city.toLowerCase().includes(state.searchQuery) ||
+          item.category.toLowerCase().includes(state.searchQuery) ||
+          item.badge.toLowerCase().includes(state.searchQuery);
+
+        return matchCity && matchCollection && matchCategory && matchQuery;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        if (showMoreWrap) showMoreWrap.classList.add("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+
+      const isDefaultUnfilteredView =
+        state.activeFilter === "Semua Menu" &&
+        state.activeCity === "Semua Wilayah" &&
+        state.activeCollection === null &&
+        state.maxBudget === null &&
+        !state.searchQuery;
+
+      const visibleItems = isDefaultUnfilteredView && !state.showAll
+        ? filtered.slice(0, 12)
+        : filtered;
+
+      if (showMoreWrap) {
+        if (isDefaultUnfilteredView && filtered.length > 12) {
+          showMoreWrap.classList.remove("hidden");
+          if (showMoreLabel) {
+            showMoreLabel.textContent = state.showAll
+              ? "Tampilkan Lebih Ringkas (12 Menu)"
+              : `Lihat Semua ${filtered.length} Menu Promo`;
+          }
+          if (showMoreArrow) {
+            showMoreArrow.textContent = state.showAll ? "↑" : "↓";
+          }
+        } else {
+          showMoreWrap.classList.add("hidden");
+        }
+      }
+
+      grid.innerHTML = visibleItems.map((item) => {
+        const isSaved = state.savedIds.includes(item.id);
+        return `
+          <article class="group rounded-3xl bg-white p-4 hairline-border shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div class="relative overflow-hidden rounded-2xl h-44 bg-subtle">
+                <img
+                  src="${item.img}"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x400/FFE6D5/EA580C?text=${encodeURIComponent(item.merchant)}';"
+                  alt="${item.merchant}"
+                  class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <span class="absolute top-3 left-3 rounded-full bg-[#FF6B1A] px-3 py-1 text-[11px] font-extrabold text-white shadow-xs">
+                  ${item.badge}
+                </span>
+                <span class="absolute bottom-3 left-3 rounded-full bg-white/92 backdrop-blur-xs px-2.5 py-0.5 text-[10px] font-bold text-[#141312]">
+                  ${item.category}
+                </span>
+                <button
+                  type="button"
+                  onclick="toggleSavePromo(${item.id}, event)"
+                  aria-label="Simpan Favorit"
+                  class="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur-xs text-xs shadow-xs hover:scale-110 transition ${isSaved ? 'text-rose-500' : 'text-ink-muted'}"
+                >
+                  ${isSaved ? '♥' : '♡'}
+                </button>
+              </div>
+
+              <div class="mt-3.5">
+                <div class="flex items-center justify-between gap-2 text-[11px] font-semibold text-ink-muted">
+                  <span class="truncate">${item.merchant}</span>
+                  <span class="shrink-0">📍 ${item.city} • ${item.distance}</span>
+                </div>
+                <h3 class="mt-1 text-sm sm:text-base font-extrabold text-ink leading-snug line-clamp-2">
+                  ${item.menu}
+                </h3>
+                <p class="mt-1.5 text-[11px] font-medium text-ink-light">
+                  🕒 ${item.validUntil}
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3.5 border-t border-black/5 flex items-center justify-between gap-2">
+              <div>
+                <p class="text-[11px] text-ink-light line-through">${formatRp(item.oldPrice)}</p>
+                <p class="text-base font-extrabold text-[#FF6B1A]">${formatRp(item.promoPrice)}</p>
+              </div>
+
+              <button
+                type="button"
+                onclick="openVoucherModal(${item.id})"
+                class="rounded-full bg-[#181716] px-4 py-2.5 text-xs font-bold text-white hover:bg-[#FF6B1A] transition"
+              >
+                Klaim Promo
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function setFeatureBudgetMode(mode) {
+      const oldBtn = document.getElementById("budgetModeOldBtn");
+      const youngBtn = document.getElementById("budgetModeYoungBtn");
+      if (oldBtn && youngBtn) {
+        const isOld = mode === "tua";
+        oldBtn.className = isOld
+          ? "rounded-full bg-ink py-1.5 text-[11px] font-bold text-white transition"
+          : "rounded-full py-1.5 text-[11px] font-semibold text-ink-muted hover:text-ink transition";
+        youngBtn.className = !isOld
+          ? "rounded-full bg-ink py-1.5 text-[11px] font-bold text-white transition"
+          : "rounded-full py-1.5 text-[11px] font-semibold text-ink-muted hover:text-ink transition";
+      }
+      applyMaxBudget(mode === "tua" ? 15000 : 25000);
+    }
+
+    function initSavingsProgressObserver() {
+      const card = document.getElementById("savingsFeatureCard");
+      const bar = document.getElementById("savingsProgressBar");
+      if (!card || !bar) return;
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              bar.style.width = "82%";
+            } else {
+              bar.style.width = "0%";
+            }
+          });
+        }, { threshold: 0.35 });
+        observer.observe(card);
+      } else {
+        bar.style.width = "82%";
+      }
+    }
+
+    function toggleSavePromo(promoId, event) {
+      if (event) event.stopPropagation();
+      const idx = state.savedIds.indexOf(promoId);
+      if (idx === -1) {
+        state.savedIds.push(promoId);
+        showToast("Promo disimpan ke Favorit");
+      } else {
+        state.savedIds.splice(idx, 1);
+        showToast("Promo dihapus dari Favorit");
+      }
+      renderPromoCards();
+      if (state.activeTab === 2) setShowcaseTab(2, false);
+    }
+
+    function renderPromoCards() {
+      const grid = document.getElementById("promoCardsGrid");
+      const emptyState = document.getElementById("emptyPromoState");
+      if (!grid || !emptyState) return;
+
+      const filtered = PROMO_ITEMS.filter((item) => {
+        const matchCity = state.activeCity === "Semua Wilayah" || item.city === state.activeCity;
+        const matchCategory = state.maxBudget !== null
+          ? item.promoPrice <= state.maxBudget
+          : item.tags.includes(state.activeFilter);
+        const matchQuery = !state.searchQuery ||
+          item.merchant.toLowerCase().includes(state.searchQuery) ||
+          item.menu.toLowerCase().includes(state.searchQuery) ||
+          item.city.toLowerCase().includes(state.searchQuery) ||
+          item.category.toLowerCase().includes(state.searchQuery);
+
+        return matchCity && matchCategory && matchQuery;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+      grid.innerHTML = filtered.map((item) => {
+        const isSaved = state.savedIds.includes(item.id);
+        return `
+          <article class="group rounded-3xl bg-white p-4 hairline-border shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div class="relative overflow-hidden rounded-2xl h-44 bg-subtle">
+                <img
+                  src="${item.img}"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x400/FFE6D5/EA580C?text=${encodeURIComponent(item.merchant)}';"
+                  alt="${item.merchant}"
+                  class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <span class="absolute top-3 left-3 rounded-full bg-[#FF6B1A] px-3 py-1 text-[11px] font-extrabold text-white shadow-xs">
+                  ${item.badge}
+                </span>
+                <button
+                  type="button"
+                  onclick="toggleSavePromo(${item.id}, event)"
+                  aria-label="Simpan Favorit"
+                  class="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur-xs text-xs shadow-xs hover:scale-110 transition ${isSaved ? 'text-rose-500' : 'text-ink-muted'}"
+                >
+                  ${isSaved ? '♥' : '♡'}
+                </button>
+              </div>
+
+              <div class="mt-3.5">
+                <div class="flex items-center justify-between text-[11px] font-semibold text-ink-muted">
+                  <span>${item.merchant}</span>
+                  <span>📍 ${item.city} • ${item.distance}</span>
+                </div>
+                <h3 class="mt-1 text-sm sm:text-base font-extrabold text-ink leading-snug line-clamp-2">
+                  ${item.menu}
+                </h3>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3.5 border-t border-black/5 flex items-center justify-between gap-2">
+              <div>
+                <p class="text-[11px] text-ink-light line-through">${formatRp(item.oldPrice)}</p>
+                <p class="text-base font-extrabold text-[#FF6B1A]">${formatRp(item.promoPrice)}</p>
+              </div>
+
+              <button
+                type="button"
+                onclick="openVoucherModal(${item.id})"
+                class="rounded-full bg-[#181716] px-4 py-2.5 text-xs font-bold text-white hover:bg-[#FF6B1A] transition"
+              >
+                Klaim Promo
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    // ========================================================================
+    // 2. EXACT ANIMATION 1 & 3: 60FPS REQUESTANIMATIONFRAME SCROLL CHOREOGRAPHY
+    // ========================================================================
+    function initScrollAnimations() {
+      const kineticSection = document.getElementById("kineticSection");
+      const cRing = document.getElementById("kineticCRing");
+      const cArcPath = document.getElementById("kineticCArcPath");
+      const line1 = document.getElementById("kineticLine1");
+      const line2 = document.getElementById("kineticLine2");
+      const line3 = document.getElementById("kineticLine3");
+
+      const wordmarkSection = document.getElementById("giantWordmarkSection");
+      const wordmarkEl = document.getElementById("giantWordmarkEl");
+
+      const ARC_LEN = 438;
+      const LERP_FACTOR = 0.11;
+
+      let rafId = null;
+      let currentWordmarkProgress = 0;
+      let targetWordmarkProgress = 0;
+
+      function applyKineticLineStyle(el, val) {
+        const blurPx = (1 - val) * 14;
+        const yPx = (1 - val) * 24;
+        el.style.filter = `blur(${blurPx.toFixed(2)}px)`;
+        el.style.opacity = val.toFixed(3);
+        el.style.transform = `translate3d(0, ${yPx.toFixed(1)}px, 0)`;
+      }
+
+      function renderWordmarkPhysics(progress) {
+        if (!wordmarkEl) return;
+        const translateY = (1 - progress) * 68;
+        const scale = 0.96 + 0.04 * progress;
+        const opacity = clamp(progress * 1.15, 0, 1);
+
+        wordmarkEl.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+        wordmarkEl.style.opacity = opacity.toFixed(3);
+      }
+
+      function stepAnimations() {
+        const vh = window.innerHeight;
+
+        // --- A. Sticky Kinetic Quote & Blurred C-Ring Choreography ---
+        if (kineticSection && line1 && line2 && line3 && cArcPath && cRing) {
+          const rect = kineticSection.getBoundingClientRect();
+          const startTop = vh * 0.55;
+          const stickyTravel = Math.max(kineticSection.offsetHeight - vh, vh * 0.35);
+          const endTop = -stickyTravel;
+
+          const p = clamp((startTop - rect.top) / (startTop - endTop), 0, 1);
+
+          const cVis = smoothstep(0.0, 0.65, p);
+          const dashOffset = ARC_LEN * (1 - cVis);
+          cArcPath.style.strokeDashoffset = dashOffset.toFixed(1);
+          cRing.style.opacity = cVis.toFixed(3);
+
+          const rotDeg = -28 + cVis * 28;
+          const scaleRing = 0.88 + cVis * 0.12;
+          cRing.style.transform = `rotate(${rotDeg.toFixed(1)}deg) scale(${scaleRing.toFixed(3)})`;
+
+          const v1 = smoothstep(0.05, 0.45, p);
+          const v2 = smoothstep(0.28, 0.70, p);
+          const v3 = smoothstep(0.50, 0.95, p);
+
+          applyKineticLineStyle(line1, v1);
+          applyKineticLineStyle(line2, v2);
+          applyKineticLineStyle(line3, v3);
+        }
+
+        // --- B. Giant Bottom 'PromoMu®' Continuous Scroll-Linked Inertia Physics ---
+        if (wordmarkSection && wordmarkEl) {
+          const sectionRect = wordmarkSection.getBoundingClientRect();
+          const sectionHeight = Math.max(sectionRect.height, 140);
+          targetWordmarkProgress = clamp((vh - sectionRect.top) / (sectionHeight * 0.95), 0, 1);
+
+          const diff = targetWordmarkProgress - currentWordmarkProgress;
+          if (Math.abs(diff) > 0.0004) {
+            currentWordmarkProgress += diff * LERP_FACTOR;
+            renderWordmarkPhysics(currentWordmarkProgress);
+            rafId = window.requestAnimationFrame(stepAnimations);
+            return;
+          } else {
+            currentWordmarkProgress = targetWordmarkProgress;
+            renderWordmarkPhysics(currentWordmarkProgress);
+          }
+        }
+
+        rafId = null;
+      }
+
+      function scheduleAnimationFrame() {
+        if (rafId === null) {
+          rafId = window.requestAnimationFrame(stepAnimations);
+        }
+      }
+
+      window.addEventListener("scroll", scheduleAnimationFrame, { passive: true });
+      window.addEventListener("resize", scheduleAnimationFrame, { passive: true });
+
+      // Initial evaluation on load
+      stepAnimations();
+    }
+
+    // ========================================================================
+    // 3. 3-TAB SHOWCASE INTERACTIVITY
+    // ========================================================================
+    function setShowcaseTab(tabIdx, resetTimer = false) {
+      state.activeTab = tabIdx;
+      const glider = document.getElementById("tabGliderBar");
+      const body = document.getElementById("showcasePreviewBody");
+
+      if (glider) {
+        glider.style.transform = `translate3d(${tabIdx * 100}%, 0, 0)`;
+      }
+
+      for (let i = 0; i < 3; i++) {
+        const btn = document.getElementById(`showcaseTabBtn${i}`);
+        if (!btn) continue;
+        btn.className = i === tabIdx
+          ? "flex flex-col sm:flex-row items-center justify-center gap-2 pb-4 text-xs sm:text-sm font-bold text-ink transition focus:outline-none"
+          : "flex flex-col sm:flex-row items-center justify-center gap-2 pb-4 text-xs sm:text-sm font-medium text-ink-muted hover:text-ink transition focus:outline-none";
+      }
+
+      if (body) {
+        if (tabIdx === 0) {
+          body.innerHTML = `
+            <div class="showcase-fade grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
+              <div>
+                <span class="inline-block rounded-full bg-accent-50 px-3 py-1 text-[11px] font-bold text-accent-600">Filter Instan</span>
+                <h4 class="mt-2.5 text-lg font-extrabold text-ink">Temukan Promo Sesuai Isi Dompet</h4>
+                <p class="font-body mt-1.5 text-xs text-ink-muted leading-relaxed">
+                  Gunakan filter Paket Tanggal Tua &lt;20rb atau pilih wilayah kotamu untuk menyaring kafe &amp; resto terdekat dalam hitungan detik.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <button type="button" onclick="applyMaxBudget(20000)" class="rounded-full bg-ink px-4 py-2 text-xs font-bold text-white hover:bg-accent-500 transition">Coba Filter &lt;20rb</button>
+                  <button type="button" onclick="filterCityAndScroll('Madiun')" class="rounded-full bg-white px-4 py-2 text-xs font-bold text-ink hairline-border">Lihat Madiun</button>
+                </div>
+              </div>
+              <div class="rounded-2xl bg-white p-4 hairline-border shadow-card space-y-2.5">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-bold text-ink">Kopi Kenangan • Madiun</span>
+                  <span class="rounded-full bg-accent-50 px-2.5 py-0.5 text-[10px] font-extrabold text-accent-600">Rp 12.000</span>
+                </div>
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-bold text-ink">Mie Gacoan • Surabaya</span>
+                  <span class="rounded-full bg-accent-50 px-2.5 py-0.5 text-[10px] font-extrabold text-accent-600">Rp 15.000</span>
+                </div>
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-bold text-ink">Ayam Geprek Bensu • Yogya</span>
+                  <span class="rounded-full bg-accent-50 px-2.5 py-0.5 text-[10px] font-extrabold text-accent-600">Rp 14.000</span>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (tabIdx === 1) {
+          body.innerHTML = `
+            <div class="showcase-fade grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
+              <div>
+                <span class="inline-block rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold text-emerald-700">Tanpa Biaya Admin</span>
+                <h4 class="mt-2.5 text-lg font-extrabold text-ink">Klaim Kode QR &amp; Tunjukkan ke Kasir</h4>
+                <p class="font-body mt-1.5 text-xs text-ink-muted leading-relaxed">
+                  Setiap promo dilengkapi kode QR digital dan kode voucher unik yang langsung siap dipindai atau diklaim via WhatsApp.
+                </p>
+                <button type="button" onclick="openVoucherModal(1)" class="mt-4 rounded-full bg-ink px-4 py-2 text-xs font-bold text-white hover:bg-accent-500 transition">
+                  Buka Contoh Voucher QR
+                </button>
+              </div>
+              <div class="rounded-2xl bg-white p-4 hairline-border shadow-card flex items-center justify-between gap-4">
+                <div>
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-ink-light">Kode Voucher Aktif</p>
+                  <p class="mt-1 font-mono text-sm font-extrabold text-ink">PROMOMU-KK50</p>
+                  <p class="mt-0.5 text-[11px] text-emerald-600 font-semibold">✓ Berlaku hari ini di outlet pilihan</p>
+                </div>
+                <span class="rounded-2xl bg-canvas px-3.5 py-2.5 font-extrabold text-xs text-accent-600 hairline-border">QR READY</span>
+              </div>
+            </div>
+          `;
+        } else {
+          const savedList = PROMO_ITEMS.filter(p => state.savedIds.includes(p.id));
+          body.innerHTML = `
+            <div class="showcase-fade grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
+              <div>
+                <span class="inline-block rounded-full bg-rose-50 px-3 py-1 text-[11px] font-bold text-rose-600">Daftar Favorit (${savedList.length})</span>
+                <h4 class="mt-2.5 text-lg font-extrabold text-ink">Simpan Tempat Nongkrong Andalanmu</h4>
+                <p class="font-body mt-1.5 text-xs text-ink-muted leading-relaxed">
+                  Klik ikon hati (♡) di kartu promo mana pun untuk menyimpannya agar mudah diakses saat jam makan siang atau malam minggu.
+                </p>
+              </div>
+              <div class="rounded-2xl bg-white p-4 hairline-border shadow-card space-y-2">
+                ${savedList.length > 0 ? savedList.slice(0, 3).map(item => `
+                  <div class="flex items-center justify-between text-xs py-1">
+                    <span class="font-bold text-ink truncate pr-2">${item.merchant} — ${item.city}</span>
+                    <button type="button" onclick="openVoucherModal(${item.id})" class="shrink-0 font-bold text-accent-600 hover:underline">Pakai →</button>
+                  </div>
+                `).join("") : `<p class="text-xs text-ink-muted">Belum ada promo favorit. Klik ♡ pada katalog promo!</p>`}
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      if (resetTimer) {
+        startShowcaseAutoCycle();
+      }
+    }
+
+    function startShowcaseAutoCycle() {
+      if (state.tabInterval) clearInterval(state.tabInterval);
+      state.tabInterval = setInterval(() => {
+        const nextTab = (state.activeTab + 1) % 3;
+        setShowcaseTab(nextTab, false);
+      }, 4500);
+    }
+
+    // ========================================================================
+    // 4. AUTH MODAL (SIGN IN / SIGN UP WITH GOOGLE & APPLE)
+    // ========================================================================
+    function openAuthModal(mode = "signin") {
+      setAuthMode(mode);
+      const modal = document.getElementById("authModal");
+      if (modal) modal.classList.remove("hidden");
+    }
+
+    function closeAuthModal() {
+      const modal = document.getElementById("authModal");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    function setAuthMode(mode) {
+      const heading = document.getElementById("authModalHeading");
+      const tabIn = document.getElementById("authTabSignIn");
+      const tabUp = document.getElementById("authTabSignUp");
+      const submitBtn = document.getElementById("authSubmitBtn");
+
+      const isSignIn = mode === "signin";
+      if (heading) heading.textContent = isSignIn ? "Masuk ke PromoMu" : "Daftar Akun PromoMu";
+      if (submitBtn) submitBtn.textContent = isSignIn ? "Masuk Sekarang" : "Buat Akun Gratis";
+
+      if (tabIn && tabUp) {
+        tabIn.className = isSignIn
+          ? "rounded-full bg-white py-1.5 text-xs font-bold text-ink shadow-sm"
+          : "rounded-full py-1.5 text-xs font-semibold text-ink-muted";
+        tabUp.className = !isSignIn
+          ? "rounded-full bg-white py-1.5 text-xs font-bold text-ink shadow-sm"
+          : "rounded-full py-1.5 text-xs font-semibold text-ink-muted";
+      }
+    }
+
+    function simulateOAuthLogin(provider) {
+      state.user = {
+        name: provider === "Google" ? "Sobat Google" : "Sobat Apple",
+        provider
+      };
+      updateAuthUI();
+      closeAuthModal();
+      showToast(`Berhasil masuk dengan akun ${provider}!`);
+    }
+
+    function handleEmailAuthSubmit(event) {
+      event.preventDefault();
+      const emailEl = document.getElementById("authEmailField");
+      const rawName = emailEl && emailEl.value ? emailEl.value.split("@")[0] : "Mahasiswa";
+      state.user = {
+        name: rawName.charAt(0).toUpperCase() + rawName.slice(1),
+        provider: "Email"
+      };
+      updateAuthUI();
+      closeAuthModal();
+      showToast(`Selamat datang, ${state.user.name}!`);
+    }
+
+    function signOutUser() {
+      state.user = null;
+      updateAuthUI();
+      showToast("Berhasil keluar dari akun");
+    }
+
+    function updateAuthUI() {
+      const guestBox = document.getElementById("authGuestActions");
+      const userPill = document.getElementById("authUserPill");
+      const initialEl = document.getElementById("userAvatarInitial");
+      const nameEl = document.getElementById("userAvatarName");
+      const countEl = document.getElementById("userVoucherCount");
+
+      if (!guestBox || !userPill) return;
+
+      if (state.user) {
+        guestBox.classList.add("hidden");
+        userPill.classList.remove("hidden");
+        userPill.classList.add("flex");
+        if (initialEl) initialEl.textContent = state.user.name.charAt(0).toUpperCase();
+        if (nameEl) nameEl.textContent = state.user.name;
+        if (countEl) countEl.textContent = state.claimedIds.length;
+      } else {
+        guestBox.classList.remove("hidden");
+        userPill.classList.add("hidden");
+        userPill.classList.remove("flex");
+      }
+    }
+
+    // ========================================================================
+    // 5. VOUCHER QR MODAL & MERCHANT MODAL
+    // ========================================================================
+    function openVoucherModal(promoId) {
+      const item = PROMO_ITEMS.find((p) => p.id === promoId) || PROMO_ITEMS[0];
+      if (!item) return;
+
+      if (!state.claimedIds.includes(item.id)) {
+        state.claimedIds.push(item.id);
+        updateAuthUI();
+      }
+
+      const merchantEl = document.getElementById("qrMerchantName");
+      const titleEl = document.getElementById("qrPromoTitle");
+      const addressEl = document.getElementById("qrOutletAddress");
+      const codeEl = document.getElementById("qrVoucherCode");
+      const priceEl = document.getElementById("qrPriceSummary");
+      const waEl = document.getElementById("qrWhatsappLink");
+      const modal = document.getElementById("voucherQrModal");
+
+      if (merchantEl) merchantEl.textContent = item.merchant;
+      if (titleEl) titleEl.textContent = item.menu;
+      if (addressEl) addressEl.textContent = item.address;
+      if (codeEl) codeEl.textContent = item.code;
+      if (priceEl) priceEl.textContent = `Bayar ${formatRp(item.promoPrice)} di kasir (Hemat ${formatRp(item.oldPrice - item.promoPrice)})`;
+      if (waEl) {
+        const msg = encodeURIComponent(`Halo ${item.merchant}, saya ingin klaim voucher PromoMu (${item.code}) untuk ${item.menu}.`);
+        waEl.href = `https://wa.me/?text=${msg}`;
+      }
+
+      if (modal) modal.classList.remove("hidden");
+    }
+
+    function openLatestVoucher() {
+      const lastId = state.claimedIds.length > 0 ? state.claimedIds[state.claimedIds.length - 1] : 1;
+      openVoucherModal(lastId);
+    }
+
+    function closeVoucherModal() {
+      const modal = document.getElementById("voucherQrModal");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    function copyVoucherCode() {
+      const codeEl = document.getElementById("qrVoucherCode");
+      if (!codeEl) return;
+      const text = codeEl.textContent.trim();
+
+      try {
+        const tempInput = document.createElement("textarea");
+        tempInput.value = text;
+        tempInput.style.position = "fixed";
+        tempInput.style.opacity = "0";
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        showToast(`Kode voucher ${text} disalin!`);
+      } catch (err) {
+        showToast(`Kode voucher: ${text}`);
+      }
+    }
+
+    function openMerchantModal() {
+      const modal = document.getElementById("merchantModal");
+      if (modal) modal.classList.remove("hidden");
+    }
+
+    function closeMerchantModal() {
+      const modal = document.getElementById("merchantModal");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    function submitMerchantForm(event) {
+      event.preventDefault();
+      closeMerchantModal();
+      showToast("Pendaftaran mitra terkirim! Tim PromoMu akan segera menghubungimu.");
+    }
+
+    // ========================================================================
+    // 6. TOAST NOTIFICATION HELPER
+    // ========================================================================
+    let toastTimer = null;
+    function showToast(message) {
+      const banner = document.getElementById("toastBanner");
+      const msgEl = document.getElementById("toastMessage");
+      if (!banner || !msgEl) return;
+
+      msgEl.textContent = message;
+      banner.classList.remove("translate-y-16", "opacity-0");
+      banner.classList.add("translate-y-0", "opacity-100");
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        banner.classList.add("translate-y-16", "opacity-0");
+        banner.classList.remove("translate-y-0", "opacity-100");
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
