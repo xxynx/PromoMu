@@ -157,8 +157,10 @@ interface UserDashboardProps {
   onClose: () => void;
 }
 
-const formatRp = (num: number) =>
-  'Rp ' + Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const formatRp = (num: number) => {
+  const safe = Number.isFinite(num) ? Math.round(num) : 0;
+  return 'Rp ' + safe.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+};
 
 const deriveUsername = (name: string, email: string) => {
   const source = name.trim() || email.split('@')[0] || 'member';

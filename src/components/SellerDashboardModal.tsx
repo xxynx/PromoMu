@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   ArrowLeft,
   BadgeCheck,
@@ -32,8 +32,10 @@ interface SellerDashboardModalProps {
   onClose: () => void;
 }
 
-const formatRp = (num: number) =>
-  'Rp ' + Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const formatRp = (num: number) => {
+  const safe = Number.isFinite(num) ? Math.round(num) : 0;
+  return 'Rp ' + safe.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+};
 
 const toWhatsappHref = (rawPhone: string, businessName: string) => {
   const digits = (rawPhone || '').replace(/\D/g, '');
@@ -144,6 +146,17 @@ export const SellerDashboardModal: React.FC<SellerDashboardModalProps> = ({
         item.badge.toLowerCase().includes(q)
     );
   }, [merchantPromos, promoSearch]);
+
+  useEffect(() => {
+    setBannerError(false);
+    setLogoError(false);
+  }, [selectedPromoId]);
+
+  useEffect(() => {
+    if (!selectedPromo || !sellerProfile) {
+      onClose();
+    }
+  }, [selectedPromo, sellerProfile, onClose]);
 
   if (!selectedPromo || !sellerProfile) {
     return null;

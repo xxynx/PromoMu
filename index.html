@@ -2272,6 +2272,7 @@
             localStorage.removeItem("promomu_business_catalog_v1");
             localStorage.removeItem("promomu_business_redemptions_v1");
             localStorage.removeItem("promomu_business_outlet_status_v1");
+            localStorage.removeItem("promomu_subscription_plan_v1");
             window.addEventListener("DOMContentLoaded", () => {
               showToast("Akun Anda telah dihapus permanen karena melewati batas 25 hari");
             });
@@ -2286,6 +2287,7 @@
             localStorage.removeItem("promomu_business_catalog_v1");
             localStorage.removeItem("promomu_business_redemptions_v1");
             localStorage.removeItem("promomu_business_outlet_status_v1");
+            localStorage.removeItem("promomu_subscription_plan_v1");
             persistSession();
             window.addEventListener("DOMContentLoaded", () => {
               showToast("Akun bisnis telah dihapus permanen karena melewati batas 25 hari");
@@ -2403,6 +2405,7 @@
           localStorage.removeItem("promomu_business_catalog_v1");
           localStorage.removeItem("promomu_business_redemptions_v1");
           localStorage.removeItem("promomu_business_outlet_status_v1");
+          localStorage.removeItem("promomu_subscription_plan_v1");
         } catch (e) {
           // Ignore storage errors
         }
@@ -2420,7 +2423,10 @@
       showToast: (msg) => showToast(msg)
     };
 
-    const formatRp = (num) => "Rp " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const formatRp = (num) => {
+      const safe = Number.isFinite(Number(num)) ? Math.round(Number(num)) : 0;
+      return "Rp " + safe.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    };
     const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
     const smoothstep = (edge0, edge1, x) => {
       const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
@@ -3622,7 +3628,10 @@
       if (titleEl) titleEl.textContent = item.menu;
       if (addressEl) addressEl.textContent = item.address;
       if (codeEl) codeEl.textContent = item.code;
-      if (priceEl) priceEl.textContent = `Bayar ${formatRp(item.promoPrice)} di kasir (Hemat ${formatRp(item.oldPrice - item.promoPrice)})`;
+      if (priceEl) {
+        const savings = Math.max(0, (Number(item.oldPrice) || 0) - (Number(item.promoPrice) || 0));
+        priceEl.textContent = `Bayar ${formatRp(item.promoPrice)} di kasir (Hemat ${formatRp(savings)})`;
+      }
       if (waEl) {
         const msg = encodeURIComponent(`Halo ${item.merchant}, saya ingin klaim voucher PromoMu (${item.code}) untuk ${item.menu}.`);
         waEl.href = `https://wa.me/?text=${msg}`;
