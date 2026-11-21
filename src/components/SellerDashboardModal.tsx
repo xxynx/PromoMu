@@ -164,31 +164,42 @@ export const SellerDashboardModal: React.FC<SellerDashboardModalProps> = ({
 
   const publicUrlText = `promomu.id/bisnis/${sellerProfile.brandSlug}`;
 
-  const handleCopySlug = () => {
-    try {
-      if (navigator.clipboard?.writeText) {
-        navigator.clipboard.writeText(`https://${publicUrlText}`);
+  const copyTextSafely = (text: string) => {
+    const fallbackCopy = () => {
+      try {
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        temp.style.position = 'fixed';
+        temp.style.opacity = '0';
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+      } catch {
+        // Ignore clipboard fallback errors
       }
-      setCopiedSlug(true);
-      window.PromoMuBridge?.showToast(`Tautan ${publicUrlText} disalin`);
-      setTimeout(() => setCopiedSlug(false), 1800);
-    } catch {
-      window.PromoMuBridge?.showToast(publicUrlText);
+    };
+
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(text).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
     }
+  };
+
+  const handleCopySlug = () => {
+    copyTextSafely(`https://${publicUrlText}`);
+    setCopiedSlug(true);
+    window.PromoMuBridge?.showToast(`Tautan ${publicUrlText} disalin`);
+    setTimeout(() => setCopiedSlug(false), 1800);
   };
 
   const handleCopyPromoCode = (promo: PromoItem, e: React.MouseEvent) => {
     e.stopPropagation();
-    try {
-      if (navigator.clipboard?.writeText) {
-        navigator.clipboard.writeText(promo.code);
-      }
-      setCopiedCodeId(promo.id);
-      window.PromoMuBridge?.showToast(`Kode voucher ${promo.code} disalin`);
-      setTimeout(() => setCopiedCodeId(null), 1600);
-    } catch {
-      window.PromoMuBridge?.showToast(`Kode: ${promo.code}`);
-    }
+    copyTextSafely(promo.code);
+    setCopiedCodeId(promo.id);
+    window.PromoMuBridge?.showToast(`Kode voucher ${promo.code} disalin`);
+    setTimeout(() => setCopiedCodeId(null), 1600);
   };
 
   const handleClaimPromo = (promoId: number) => {

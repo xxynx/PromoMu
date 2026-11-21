@@ -679,10 +679,8 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({
     profileAvatarBg !== savedBaseline.avatarBg;
 
   const handleCopyCode = (code: string) => {
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(code);
-      } else {
+    const fallbackCopy = () => {
+      try {
         const temp = document.createElement('textarea');
         temp.value = code;
         temp.style.position = 'fixed';
@@ -691,6 +689,16 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({
         temp.select();
         document.execCommand('copy');
         document.body.removeChild(temp);
+      } catch {
+        // Ignore clipboard fallback errors
+      }
+    };
+
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
       }
       setCopiedCode(code);
       window.PromoMuBridge?.showToast(`Kode voucher ${code} disalin!`);
